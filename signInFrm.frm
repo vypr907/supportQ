@@ -23,21 +23,22 @@ Private Sub UserForm_Initialize()
    Set listSht = wb.Sheets("listData")
 
    'loops to fill comboboxes
-   'For Each reasonItem In listSht.Range("reasonCode")
-   '   With Me.reasonSelect
-   '      .AddItem reasonItem.Value
-   '   End With
-   'Next reasonItem
+   Dim item as Variant
+   For Each item In listSht.Range("reasonCode")
+      With Me.reasonCboBx
+         .AddItem item.Value
+      End With
+   Next item
 
-   'For Each branchItem In listSht.Range("branchOfSvc")
-   '   With Me.branchSelect
-   '      .AddItem branchItem.Value
-   '   End With
-   'Next branchItem
+   For Each item In listSht.Range("branchOfSvc")
+      With Me.branchCboBx
+         .AddItem item.Value
+      End With
+   Next item
 
    'setting to first value "Select"
-   'Me.branchSelect.ListIndex = 0
-   'Me.reasonSelect.ListIndex = 0
+   Me.branchCboBx.ListIndex = 0
+   Me.reasonCboBx.ListIndex = 0
 End Sub
 
 Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
@@ -56,3 +57,4 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
       End If
    End If
 End Sub
+'update
