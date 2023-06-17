@@ -57,4 +57,7 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
       End If
    End If
 End Sub
-'update
+
+Private Sub submitBtn_Click()
+   queueAdd
+End Sub 
