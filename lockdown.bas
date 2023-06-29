@@ -22,7 +22,7 @@ Sub openSesame()
 End Sub
 
 Sub byeFelicia()
-    'MsgBox "Bye Felicia!"
+    MsgBox "Bye Felicia!"
     Dim sht As Worksheet
     If testCode = False Then
         For Each sht In ActiveWorkbook.Worksheets
@@ -38,7 +38,7 @@ End Sub
 
 Sub gameOver()
 'sub to save and close Excel
-    'MsgBox "Game over!!!"
+    MsgBox "Game over!!!"
     If testCode = False Then
         byeFelicia
         Windows("SupportQ_DEV.xlsm").Activate 'make sure to only close this excel doc

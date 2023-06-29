@@ -17,12 +17,10 @@ Dim good2go As Boolean
 
 'sub to verify password
 Sub comparison()
-    
     Dim f as pwOnExitFrm
     Set f = New pwOnExitFrm
     'Set password = f.password
     f.Show
-
 End Sub
 
 'sub to validate all user entries
@@ -98,3 +96,4 @@ On Error Resume Next
     End With
 
 End Sub 
+
