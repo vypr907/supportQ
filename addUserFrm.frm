@@ -13,7 +13,13 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
+Sub userForm_Initialize()
+    Me.pinBx.Value = Int(2 + Rnd * (9999 - 1111 + 1))
+End Sub
+
 Private Sub cancelBtn_Click()
+
     'closing the add user form
     On Error Resume Next
     
@@ -26,27 +32,26 @@ Private Sub cancelBtn_Click()
 
     'checking for valid input in the text boxes
     '---FIRST NAME-----------------------------
-    If firstNameBx.Value = "" Then
-        lastNameBx.SetFocus
+    If fnameBx.Value = "" Then
+        lnameBx.SetFocus
     Else
         response = MsgBox(msg, style, title)
         If response = vbYes Then
-            Me.lastNameBx.Value = ""
-            Me.cardNumBx.Value = ""
+            Me.lnameBx.Value = ""
             Unload Me
         Else
             Exit Sub
         End If
     End If
     '---LAST NAME------------------------------
-    If lastNameBx.Value = "" Then
-        cardNumBx.SetFocus
+    If lnameBx.Value = "" Then
+        'cardNumBx.SetFocus
     Else
         response = MsgBox(msg, style, title)
         If response = vbYes Then
             Unload Me
         Else
-            'lastNameBx.SetFocus
+            lnameBx.SetFocus
             Exit Sub
         End If
     End If
@@ -56,4 +61,12 @@ End Sub
 
 Private Sub saveBtn_Click()
     addUser
+    'clear form
+    With Me
+        .fnameBx.Value = ""
+        .miBx.Value = ""
+        .lnameBx.Value = ""
+        .pinBx.Value = Int(2 + Rnd * (9999 -1111 + 1))
+    End With
+    MsgBox "done."
 End Sub

@@ -2,18 +2,16 @@ Attribute VB_Name = "backend"
 Option Explicit
 Option Base 0
 
-'Global Variables
-public password as Variant
-public refID As Integer
-
 'Module Variables
 Dim good2go As Boolean
 
 'loading data sheets
-    Public wb As Workbook
-    Public queueSht As Worksheet
-    Public listSht As Worksheet
-    Public logSht As Worksheet
+Sub init()
+    Set wb = Workbooks("SupportQ_DEV")
+    Set qSht = wb.Sheets("Queue")
+    Set logSht = wb.Sheets("Log")
+    Set dataSht = wb.Sheets("listData")
+End Sub
 
 'sub to verify password
 Sub comparison()
@@ -97,3 +95,28 @@ On Error Resume Next
 
 End Sub 
 
+Sub start()
+    testCode = Application.InputBox("Run in test mode? (1=true, 0=false)" & vbCr _
+    & "1 = True, 0 = False", "Startup", Type:=4)
+
+    init
+
+    'Dim start As startScreenFrm
+    Set startScreen = New startScreenFrm
+    Set signIn = New signInFrm
+    Set queueScreen = New queueView
+    Set addUsrScreen = New addUserFrm
+
+    
+    If testCode = True Then
+        MsgBox "hi, I'm in test mode!"
+        startScreenFrm.Show vbModeless
+        Application.ScreenUpdating = True
+        openSesame
+    Else
+        MsgBox "hi, I'm in regular mode!"
+        startScreenFrm.Show vbModal
+        byeFelicia
+        Application.ScreenUpdating = False
+    End If
+End Sub

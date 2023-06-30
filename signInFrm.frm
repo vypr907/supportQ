@@ -17,20 +17,16 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub UserForm_Initialize()
-   Set wb = Workbooks("SupportQ_DEV")
-   Set queueSht = wb.Sheets("Queue")
-   Set logSht = wb.Sheets("Log")
-   Set listSht = wb.Sheets("listData")
 
    'loops to fill comboboxes
    Dim item as Variant
-   For Each item In listSht.Range("reasonCode")
+   For Each item In dataSht.Range("reasonCode")
       With Me.reasonCboBx
          .AddItem item.Value
       End With
    Next item
 
-   For Each item In listSht.Range("branchOfSvc")
+   For Each item In dataSht.Range("branchOfSvc")
       With Me.branchCboBx
          .AddItem item.Value
       End With

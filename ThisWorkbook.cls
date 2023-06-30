@@ -2,23 +2,7 @@ Option Explicit
 
 Private Sub Workbook_Open()
 'auto run macros to hide sheets and pop up GUI
-    testCode = Application.InputBox("Run in test mode? (1=true, 0=false)" & vbCr _
-    & "1 = True, 0 = False", "Startup", Type:=4)
-
-    Dim start As startScreenFrm
-    Set start = New startScreenFrm
-    
-    If testCode = True Then
-        MsgBox "hi, I'm in test mode!"
-        startScreenFrm.Show vbModeless
-        Application.ScreenUpdating = True
-        openSesame
-    Else
-        MsgBox "hi, I'm in regular mode!"
-        start.Show vbModal
-        byeFelicia
-        Application.ScreenUpdating = False
-    End If
+    start
 End Sub
 
 

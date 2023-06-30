@@ -16,13 +16,22 @@ Attribute VB_Exposed = False
 
 
 Private Sub startKioskBtn_Click()
-    Dim f As signInFrm
-    Set f = New signInFrm
-    f.Show
+    'Dim f As Object
+    'Set f = signInFrm
+    'f.Show
+    signInFrm.Show
 End Sub
 
 Private Sub qViewBtn_Click()
-    Dim q As queueView
-    Set q = New queueView
-    q.Show
+    'Dim q As Object
+    'Set q = queueView
+    'q.Show
+    queueView.Show
+End Sub
+
+Private Sub setupBtn_Click()
+    'Dim t As Object
+    'Set t = userMaintFrm
+    't.Show
+    userMaintFrm.Show
 End Sub
