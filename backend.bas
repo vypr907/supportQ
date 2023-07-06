@@ -11,26 +11,31 @@ Sub init()
     Set qSht = wb.Sheets("Queue")
     Set logSht = wb.Sheets("Log")
     Set dataSht = wb.Sheets("listData")
+
+    authorized = False
+    lastUserRow = dataSht.Cells(Rows.Count, 7).End(xlUp).Offset(1, 0).row
+    'activeworkbook.Names.Add Name:="users", RefersToR2C11:="=COUNTA(C" & ColNo & ")"
+    'activeworkbook.Names.Add Name:="users", RefersToR1C1:="=OFFSET($K$1,1,0,COUNTA(listData!$K:$K),1)"
 End Sub
 
 'sub to verify password
 Sub comparison()
-    Dim f as pwOnExitFrm
+    Dim f As pwOnExitFrm
     Set f = New pwOnExitFrm
     'Set password = f.password
     f.Show
 End Sub
 
 'sub to validate all user entries
-sub validate()
+Sub validate()
     'check the things, if good:
-    good2Go = True
+    good2go = True
     'else things are not good
     'good2Go = False
-    MsgBox("Hi!")
+    MsgBox ("Hi!")
 End Sub
 
-sub queueAdd()
+Sub queueAdd()
 On Error Resume Next
     'sub to do all the work putting the user's entries into the queue
     
@@ -45,8 +50,8 @@ On Error Resume Next
     Dim notes As Variant
 
     Call validate
-    Do While good2Go = False
-    loop
+    Do While good2go = False
+    Loop
 
     'load the values from the userform
     With signInFrm
@@ -81,7 +86,7 @@ On Error Resume Next
         .Cells(currentRow, 9).Value = notes
     End With
     'POST TO QUEUE
-    With queueSht
+    With qSht
         .Cells(currentRow, 1).Value = refID
         .Cells(currentRow, 2).Value = Format(Now, "mm/dd/yyyy HH:mm")
         .Cells(currentRow, 3).Value = surname
@@ -93,7 +98,14 @@ On Error Resume Next
         .Cells(currentRow, 9).Value = notes
     End With
 
-End Sub 
+End Sub
+
+Sub clearForm
+    'empty the sign-in form
+    With signInFrm
+        'TODO: empty the form
+    End With
+End Sub
 
 Sub start()
     testCode = Application.InputBox("Run in test mode? (1=true, 0=false)" & vbCr _
@@ -119,4 +131,23 @@ Sub start()
         byeFelicia
         Application.ScreenUpdating = False
     End If
+End Sub
+
+Sub save()
+    Windows("SupportQ_DEV.xlsm").Activate 'make sure to only close this excel doc
+    Application.DisplayAlerts = False
+    ThisWorkbook.Save
+    Application.DisplayAlerts = True
+End Sub
+Sub gameOver()
+    'sub to save and close Excel 
+    MsgBox "Game over!!!"
+    
+    byeFelicia 'lock and hide sheets
+    Windows("SupportQ_DEV.xlsm").Activate 'make sure to only close this excel doc
+    Application.DisplayAlerts = False
+    ThisWorkbook.Save
+    Application.DisplayAlerts = True
+    ActiveWorkbook.Close SaveChanges:=False
+    
 End Sub

@@ -6,12 +6,15 @@ Global qSht As Worksheet
 Global logSht As Worksheet
 Global dataSht As Worksheet
 
-public password as Variant
-public refID As Integer
+Public password As Variant
+Public refID As Integer
 
 Global startScreen As startScreenFrm
 Global signIn As signInFrm
 Global queueScreen As queueView
 Global addUsrScreen As addUserFrm
+Global authFrm As authFrm
 
 Global lastUserRow As Integer
+Global usersRng As Range
+Global authorized As Boolean

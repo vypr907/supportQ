@@ -66,7 +66,8 @@ Private Sub saveBtn_Click()
         .fnameBx.Value = ""
         .miBx.Value = ""
         .lnameBx.Value = ""
-        .pinBx.Value = Int(2 + Rnd * (9999 -1111 + 1))
+        .pinBx.Value = Int(2 + Rnd * (9999 - 1111 + 1))
     End With
     MsgBox "done."
 End Sub
+

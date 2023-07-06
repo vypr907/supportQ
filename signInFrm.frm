@@ -16,10 +16,10 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub UserForm_Initialize()
+Private Sub userForm_Initialize()
 
    'loops to fill comboboxes
-   Dim item as Variant
+   Dim item As Variant
    For Each item In dataSht.Range("reasonCode")
       With Me.reasonCboBx
          .AddItem item.Value
@@ -49,11 +49,13 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
       If password = "609eacoms" Then
          Cancel = False
       Else
-         MsgBox("Authentication Failure")
+         MsgBox ("Authentication Failure")
       End If
    End If
 End Sub
 
 Private Sub submitBtn_Click()
    queueAdd
-End Sub 
+   save
+   clearForm
+End Sub

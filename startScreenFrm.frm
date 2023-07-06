@@ -23,9 +23,17 @@ Private Sub startKioskBtn_Click()
 End Sub
 
 Private Sub qViewBtn_Click()
-    'Dim q As Object
-    'Set q = queueView
-    'q.Show
+
+    'Call authorizer
+    'Dim test As Boolean
+    'test = authorizer()
+
+    'If authorizer() = True Then'correct PIN entered
+    '    queueView.Show
+    'Else
+    '    MsgBox "Access Denied.",vbOk,"No."
+    '    Exit Sub
+    'End If
     queueView.Show
 End Sub
 
@@ -35,3 +43,4 @@ Private Sub setupBtn_Click()
     't.Show
     userMaintFrm.Show
 End Sub
+

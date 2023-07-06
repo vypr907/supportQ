@@ -50,3 +50,34 @@ Sub gameOver()
     End If
     
 End Sub
+
+Function authorizer() as Boolean
+'function to authenticate you to view queue
+    Dim f As New authFrm
+    Set f.authFrm = Me
+    Dim pin As Integer
+    Dim vPIN As Integer
+    Dim vUSR As Integer
+    Dim vUserFName
+
+    f.Show
+
+    pin = f.pinEntryBx.Value
+    vUSR = f.userCboBx.ListIndex
+    vUSR = vUSR + 2
+
+    With dataSht
+        vUserFName = .Cells(vUSR, 6).Value
+        vPIN = .Cells(vUSR, 9).Value
+    End With
+
+    MsgBox (vUserFName &" was found!")
+
+    If vPIN = pin Then'matches
+        authorized = True
+        authorizer = True
+    Else
+        authorized = False
+        authorizer = False
+    End If
+End Function

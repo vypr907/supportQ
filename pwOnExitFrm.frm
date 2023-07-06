@@ -17,7 +17,7 @@ Attribute VB_Exposed = False
 Option Explicit
 Option Base 0
 
-Dim response as Variant
+Dim response As Variant
 
 Private Sub initialize()
    password = ""

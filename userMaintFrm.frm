@@ -16,7 +16,7 @@ Attribute VB_Exposed = False
 
 Sub userForm_Initialize()
     Dim userRow As Integer
-    userRow = dataSht.Cells(Rows.Count, 7).End(xlUp).Offset(1 , 0).Row
+    userRow = dataSht.Cells(Rows.Count, 7).End(xlUp).Offset(1, 0).row
     lastUserRow = userRow
 
     Me.userLB.ColumnCount = 4
@@ -40,8 +40,8 @@ Sub userLB_AfterUpdate()
     '***** Verify that a row is selected first
     If userLB.ListIndex > -1 And userLB.Selected(userLB.ListIndex) Then
         '***** Use the data - in my example only columns 2 & 3 are used
-    MsgBox userLB.List(userLB.ListIndex, 1) & ":" & userLB.List(userLB.ListIndex, 2)
-End If
+        'MsgBox userLB.List(userLB.ListIndex, 1) & ":" & userLB.List(userLB.ListIndex, 2)
+    End If
 End Sub
 Private Sub rmUserBtn_Click()
 
@@ -49,10 +49,10 @@ Private Sub rmUserBtn_Click()
     '***** Verify that a row is selected first
     If userLB.ListIndex > -1 And userLB.Selected(userLB.ListIndex) Then
         '***** Use the data - in my example only columns 2 & 3 are used
-        MsgBox userLB.List(userLB.ListIndex, 1) & ":" & userLB.List(userLB.ListIndex, 2)
+        'MsgBox userLB.List(userLB.ListIndex, 1) & ":" & userLB.List(userLB.ListIndex, 2)
         selectedRow = userLB.ListIndex + 2
-        MsgBox selectedRow
+        'MsgBox selectedRow
 
-        removeUser(selectedRow)
+        removeUser (selectedRow)
     End If
 End Sub
