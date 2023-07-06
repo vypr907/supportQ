@@ -39,23 +39,29 @@ Private Sub userform_Initialize()
 End Sub
 
 Private Sub refreshBtnOne_Click()
-   lastRow = qSht.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).row
-
-   Me.custQLB.ColumnCount = 9
-   '                          #,time,surname,first,branch,shop,phone,reason,notes
-   Me.custQLB.ColumnWidths = "15,0,50,40,35,30,60,120,80"
-   Me.custQLB.RowSource = "Queue!A2:I" & lastRow
-
-   qSizeBx = custQLB.ListCount - 1
-   timeBx = Now
+   refresh
 End Sub
 
-'TODO: Close button
 Private Sub closeBtnOne_Click()
    Me.Hide
 End Sub
 'TODO: Take button
+Private Sub takeBtn_Click()
 
+   '**THIS CODE WORKS, BUT WANT TO FORCE "FIFO"----------------------------
+   Dim selectedRow As Integer
+   Dim selectedUser As String
+   Dim refID As Integer
+   '*Verify that a row is selected first
+   If custQLB.ListIndex > -1 And custQLB.Selected(custQLB.ListIndex) Then
+      '*Use the data
+      selectedRow = custQLB.ListIndex + 2
+      selectedUser = techCboBx.Value
+      refID = custQLB.List(custQLB.ListIndex,0)
+      takeEntry selectedRow,refID,selectedUser
+   End If
+   '**----------------------------------------------------------------------
+End Sub
 
 Private Sub MultiPage1_Click(ByVal Index As Long)
 	If Index = 1 Then  'for example, if 2nd.page clicked (first page start from Index=0)

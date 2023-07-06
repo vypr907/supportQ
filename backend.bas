@@ -104,6 +104,14 @@ Sub clearForm
     'empty the sign-in form
     With signInFrm
         'TODO: empty the form
+        .surnameBx.Value = ""
+        .fnameBx.Value = ""
+        .branchCboBx.ListIndex = -1
+        .rankBx.Value = ""
+        .shopBx.Value = ""
+        .phoneBx.Value = ""
+        .reasonCboBx.ListIndex = -1
+        .notesBx.Value = ""
     End With
 End Sub
 
@@ -150,4 +158,40 @@ Sub gameOver()
     Application.DisplayAlerts = True
     ActiveWorkbook.Close SaveChanges:=False
     
+End Sub
+
+Public Function takeEntry(row As Integer, ref As Integer, usr As String)
+    Dim logRow As Integer
+    Dim found As Range
+    MsgBox "Yoink!"
+    
+    'TODO: Find row by matching ref
+    Set found = logSht.Range("A:A").Find(What:=ref)
+    logRow = found.Row
+
+    'STEP ONE: mark logSht w/user and timestamp
+    With logSht
+        .Cells(logRow,10).Value = usr
+        .Cells(logRow,11).Value = Now
+    End With
+
+    'STEP TWO: remove entry from queue
+    With qSht
+        .Cells(row, 1).EntireRow.Delete
+    End With
+    refresh
+
+End Function
+
+Sub refresh()
+    Dim lastRow As Integer
+    lastRow = qSht.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).row
+    With queueView
+        .custQLB.ColumnCount = 9
+        '                  #,time,surname,first,branch,shop,phone,reason,notes
+        .custQLB.ColumnWidths = "15,0,50,40,35,30,60,120,80"
+        .custQLB.RowSource = "Queue!A2:I" & lastRow
+        .qSizeBx = .custQLB.ListCount - 1
+        .timeBx = Now
+    End With
 End Sub

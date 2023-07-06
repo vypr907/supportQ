@@ -58,4 +58,5 @@ Private Sub submitBtn_Click()
    queueAdd
    save
    clearForm
+   surnameBx.SetFocus
 End Sub
