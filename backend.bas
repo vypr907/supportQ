@@ -169,7 +169,6 @@ Public Function takeEntry(row As Integer, ref As Integer, usr As String)
     Dim found As Range
     MsgBox "Yoink!"
     
-    'TODO: Find row by matching ref
     Set found = logSht.Range("A:A").Find(What:=ref)
     logRow = found.Row
 
@@ -183,7 +182,7 @@ Public Function takeEntry(row As Integer, ref As Integer, usr As String)
     With qSht
         .Cells(row, 1).EntireRow.Delete
     End With
-    refresh
+    refresh(1)
 
 End Function
 
@@ -196,7 +195,7 @@ Sub refresh(q As Integer)
         With queueView
             .custQLB.ColumnCount = 10
             '                  #,time,surname,first,branch,shop,phone,reason,notes
-            .custQLB.ColumnWidths = "15,0,50,40,35,20,30,60,120,80"
+            .custQLB.ColumnWidths = "15,0,50,40,35,25,30,60,120,80"
             .custQLB.RowSource = "Queue!A2:J" & lastQRow
             .qSizeBx = .custQLB.ListCount - 1
             .timeBx = Now
@@ -213,7 +212,7 @@ Sub refresh(q As Integer)
             End If
             lastLogRow = logSht.Cells(Rows.Count, 1).End(xlUp).Offset(1,0).row
             For rw = 2 to lastLogRow
-                If logSht.Range("J" & CStr(rw))= .techCboBx.Value Then
+                If logSht.Range("K" & CStr(rw))= .techCboBx.Value Then
                     .myQLB.AddItem 
                     For i = 1 to 10
                         .myQLB.List(k,i-1) = logSht.Cells(rw,i)
@@ -224,3 +223,19 @@ Sub refresh(q As Integer)
         End With
     End If
 End Sub
+
+Public Function dudeWheresMyRow(ref as Integer)
+    Dim found As Range
+    Set found = logSht.Range("A:A").Find(What:=ref)
+    dudeWheresMyRow = found.Row
+End Function
+
+Public Function saveNotes(text as String, ref as Integer)
+
+    Dim found As Range
+    MsgBox "Nice save, bro!",,"Bro."
+
+    With logSht
+        .Cells(dudeWheresMyRow(ref), 10).Value = text
+    End With
+End Function
