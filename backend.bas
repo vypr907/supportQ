@@ -183,15 +183,34 @@ Public Function takeEntry(row As Integer, ref As Integer, usr As String)
 
 End Function
 
-Sub refresh()
-    Dim lastRow As Integer
-    lastRow = qSht.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).row
-    With queueView
-        .custQLB.ColumnCount = 9
-        '                  #,time,surname,first,branch,shop,phone,reason,notes
-        .custQLB.ColumnWidths = "15,0,50,40,35,30,60,120,80"
-        .custQLB.RowSource = "Queue!A2:I" & lastRow
-        .qSizeBx = .custQLB.ListCount - 1
-        .timeBx = Now
-    End With
+Sub refresh(q As Integer)
+    Dim rw as Integer
+    'Dim lastRow As Integer
+    If q = 1 Then 'refresh main queue
+        lastQRow = qSht.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).row
+        With queueView
+            .custQLB.ColumnCount = 9
+            '                  #,time,surname,first,branch,shop,phone,reason,notes
+            .custQLB.ColumnWidths = "15,0,50,40,35,30,60,120,80"
+            .custQLB.RowSource = "Queue!A2:I" & lastQRow
+            .qSizeBx = .custQLB.ListCount - 1
+            .timeBx = Now
+        End With
+    Else 'If q = 2 Then 'refresh user queue
+        'ensure that there is a "user" selected
+        With queueView
+            .myQLB.Clear
+            If .techCboBx.ListIndex = -1 Then
+                MsgBox "Sorry, a user must be selected",vbOk + vbExclamation,"Missing User"
+                .MultiPage1.Value = 0
+                .techCboBx.SetFocus
+            End If
+            lastLogRow = logSht.Cells(Rows.Count, 1).End(xlUp).Offset(1,0).row
+            For rw = 2 to lastLogRow
+                If logSht.Range("J" & CStr(rw))= .techCboBx.Value Then
+                    .myQLB.AddItem logSht.Cells(rw, 2) & "|" & logSht.Cells(rw, 3)
+                End If
+            Next rw
+        End With
+    End If
 End Sub

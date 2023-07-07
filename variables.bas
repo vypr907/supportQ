@@ -16,5 +16,7 @@ Global addUsrScreen As addUserFrm
 Global authFrm As authFrm
 
 Global lastUserRow As Integer
+Global lastQRow As Integer
+Global lastLogRow As Integer
 Global usersRng As Range
 Global authorized As Boolean

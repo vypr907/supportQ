@@ -18,6 +18,7 @@ Dim lastRow As Integer
 
 'MAIN QUEUE
 Private Sub userform_Initialize()
+   MultiPage1.Value = 0
    lastRow = qSht.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).row
 
    Me.custQLB.ColumnCount = 9
@@ -39,7 +40,7 @@ Private Sub userform_Initialize()
 End Sub
 
 Private Sub refreshBtnOne_Click()
-   refresh
+   refresh(1)
 End Sub
 
 Private Sub closeBtnOne_Click()
@@ -64,9 +65,12 @@ Private Sub takeBtn_Click()
 End Sub
 
 Private Sub MultiPage1_Click(ByVal Index As Long)
+   Dim rw as Integer
+   
 	If Index = 1 Then  'for example, if 2nd.page clicked (first page start from Index=0)
-       'your code here
-       MsgBox "Hi!"
+      'your code here
+      MsgBox "Hi!"
+      refresh(2)
 	end if
 end sub
 'MY QUEUE
