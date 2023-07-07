@@ -44,6 +44,7 @@ On Error Resume Next
     Dim surname As Variant
     Dim fname As Variant
     Dim branch As Variant
+    Dim rank As Variant
     Dim shop As Variant
     Dim phone As Variant
     Dim reason As Variant
@@ -58,6 +59,7 @@ On Error Resume Next
         surname = .surnameBx
         fname = .fnameBx
         branch = .branchCboBx.Value
+        rank = .rankCboBx.Value
         shop = .shopBx
         phone = .phoneBx
         reason = .reasonCboBx.Value
@@ -80,10 +82,11 @@ On Error Resume Next
         .Cells(currentRow, 3).Value = surname
         .Cells(currentRow, 4).Value = fname
         .Cells(currentRow, 5).Value = branch
-        .Cells(currentRow, 6).Value = shop
-        .Cells(currentRow, 7).Value = phone
-        .Cells(currentRow, 8).Value = reason
-        .Cells(currentRow, 9).Value = notes
+        .Cells(currentRow, 6).Value = rank
+        .Cells(currentRow, 7).Value = shop
+        .Cells(currentRow, 8).Value = phone
+        .Cells(currentRow, 9).Value = reason
+        .Cells(currentRow, 10).Value = notes
     End With
     'POST TO QUEUE
     With qSht
@@ -92,10 +95,11 @@ On Error Resume Next
         .Cells(currentRow, 3).Value = surname
         .Cells(currentRow, 4).Value = fname
         .Cells(currentRow, 5).Value = branch
-        .Cells(currentRow, 6).Value = shop
-        .Cells(currentRow, 7).Value = phone
-        .Cells(currentRow, 8).Value = reason
-        .Cells(currentRow, 9).Value = notes
+        .Cells(currentRow, 6).Value = rank
+        .Cells(currentRow, 7).Value = shop
+        .Cells(currentRow, 8).Value = phone
+        .Cells(currentRow, 9).Value = reason
+        .Cells(currentRow, 10).Value = notes
     End With
 
 End Sub
@@ -107,7 +111,7 @@ Sub clearForm
         .surnameBx.Value = ""
         .fnameBx.Value = ""
         .branchCboBx.ListIndex = -1
-        .rankBx.Value = ""
+        .rankCboBx.ListIndex = -1
         .shopBx.Value = ""
         .phoneBx.Value = ""
         .reasonCboBx.ListIndex = -1
@@ -171,8 +175,8 @@ Public Function takeEntry(row As Integer, ref As Integer, usr As String)
 
     'STEP ONE: mark logSht w/user and timestamp
     With logSht
-        .Cells(logRow,10).Value = usr
-        .Cells(logRow,11).Value = Now
+        .Cells(logRow,11).Value = usr
+        .Cells(logRow,12).Value = Now
     End With
 
     'STEP TWO: remove entry from queue
@@ -185,19 +189,21 @@ End Function
 
 Sub refresh(q As Integer)
     Dim rw as Integer
-    'Dim lastRow As Integer
+    Dim i,d,k as Integer
+    
     If q = 1 Then 'refresh main queue
         lastQRow = qSht.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).row
         With queueView
-            .custQLB.ColumnCount = 9
+            .custQLB.ColumnCount = 10
             '                  #,time,surname,first,branch,shop,phone,reason,notes
-            .custQLB.ColumnWidths = "15,0,50,40,35,30,60,120,80"
-            .custQLB.RowSource = "Queue!A2:I" & lastQRow
+            .custQLB.ColumnWidths = "15,0,50,40,35,20,30,60,120,80"
+            .custQLB.RowSource = "Queue!A2:J" & lastQRow
             .qSizeBx = .custQLB.ListCount - 1
             .timeBx = Now
         End With
     Else 'If q = 2 Then 'refresh user queue
         'ensure that there is a "user" selected
+        k = 0
         With queueView
             .myQLB.Clear
             If .techCboBx.ListIndex = -1 Then
@@ -208,7 +214,11 @@ Sub refresh(q As Integer)
             lastLogRow = logSht.Cells(Rows.Count, 1).End(xlUp).Offset(1,0).row
             For rw = 2 to lastLogRow
                 If logSht.Range("J" & CStr(rw))= .techCboBx.Value Then
-                    .myQLB.AddItem logSht.Cells(rw, 2) & "|" & logSht.Cells(rw, 3)
+                    .myQLB.AddItem 
+                    For i = 1 to 10
+                        .myQLB.List(k,i-1) = logSht.Cells(rw,i)
+                    Next i
+                    k = k + 1
                 End If
             Next rw
         End With

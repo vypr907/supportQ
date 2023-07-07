@@ -16,7 +16,7 @@ Attribute VB_Exposed = False
 
 Dim lastRow As Integer
 
-'MAIN QUEUE
+'***MAIN QUEUE
 Private Sub userform_Initialize()
    MultiPage1.Value = 0
    lastRow = qSht.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).row
@@ -42,6 +42,9 @@ End Sub
 Private Sub refreshBtnOne_Click()
    refresh(1)
 End Sub
+Private Sub refreshBtnTwo_Click()
+   refresh(2)
+End Sub
 
 Private Sub closeBtnOne_Click()
    Me.Hide
@@ -64,20 +67,32 @@ Private Sub takeBtn_Click()
    '**----------------------------------------------------------------------
 End Sub
 
+'***MY QUEUE
 Private Sub MultiPage1_Click(ByVal Index As Long)
    Dim rw as Integer
    
 	If Index = 1 Then  'for example, if 2nd.page clicked (first page start from Index=0)
-      'your code here
-      MsgBox "Hi!"
+      Me.myQLB.ColumnCount = 9
+      '                     #,time,surname,first,branch,shop,phone,reason,notes
+      Me.myQLB.ColumnWidths = "15,0,50,40,35,30,60,120,80"
       refresh(2)
 	end if
 end sub
-'MY QUEUE
-'TODO: my queue initialization
-   'TODO: load my queue
-
 'TODO: load data into boxes on select
+Private Sub myQLB_Change()
+   'do the shit.
+   With Me
+      .sNameBx = .myQLB.List(myQLB.ListIndex,2) 
+      .fNameBx = .myQLB.List(myQLB.ListIndex,3)
+      .rankBx = .myQLB.List(myQLB.ListIndex,4)
+      .branchBx = .myQLB.List(myQLB.ListIndex,5)
+      .shopBx = .myQLB.List(myQLB.ListIndex,6)
+      .phoneBx = .myQLB.List(myQLB.ListIndex,7)
+      .reasonBx = .myQLB.List(myQLB.ListIndex,8)
+      .notesBx = .myQLB.List(myQLB.ListIndex,9)
+   End With
+
+End Sub
 'TODO: Save button
 'TODO: RESOLVE button
 

@@ -32,9 +32,16 @@ Private Sub userForm_Initialize()
       End With
    Next item
 
+   For Each item In dataSht.Range("rank")
+      With Me.rankCboBx
+         .AddItem item.Value
+      End With
+   Next item
+
    'setting to first value "Select"
    Me.branchCboBx.ListIndex = 0
    Me.reasonCboBx.ListIndex = 0
+   Me.rankCboBx.ListIndex = 0
 End Sub
 
 Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
