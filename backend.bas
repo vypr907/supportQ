@@ -173,10 +173,11 @@ Public Function takeEntry(row As Integer, ref As Integer, usr As String)
     logRow = found.Row
 
     'STEP ONE: mark logSht w/user and timestamp
-    With logSht
-        .Cells(logRow,11).Value = usr
-        .Cells(logRow,12).Value = Now
-    End With
+    updateLog 1,ref,usr
+    'With logSht
+    '    .Cells(logRow,11).Value = usr
+    '    .Cells(logRow,12).Value = Now
+    'End With
 
     'STEP TWO: remove entry from queue
     With qSht
@@ -212,12 +213,14 @@ Sub refresh(q As Integer)
             End If
             lastLogRow = logSht.Cells(Rows.Count, 1).End(xlUp).Offset(1,0).row
             For rw = 2 to lastLogRow
-                If logSht.Range("K" & CStr(rw))= .techCboBx.Value Then
-                    .myQLB.AddItem 
-                    For i = 1 to 10
-                        .myQLB.List(k,i-1) = logSht.Cells(rw,i)
-                    Next i
-                    k = k + 1
+                If logSht.Range("K" & CStr(rw))= .techCboBx.Value Then 'if user's initials are in tech column
+                    If IsEmpty(logSht.Range("M" & CStr(rw))) Then 'only load unresolved "tickets"
+                        .myQLB.AddItem 
+                        For i = 1 to 10
+                            .myQLB.List(k,i-1) = logSht.Cells(rw,i)
+                        Next i
+                        k = k + 1
+                    End If
                 End If
             Next rw
         End With
@@ -237,5 +240,18 @@ Public Function saveNotes(text as String, ref as Integer)
 
     With logSht
         .Cells(dudeWheresMyRow(ref), 10).Value = text
+    End With
+End Function
+
+Public Function updateLog(q as Integer, ref as integer, Optional usr as String)
+    Dim here As Integer
+    here = dudeWheresMyRow(ref)
+    With logSht
+        If q = 1 Then 'User has taken from the queue
+            .Cells(here,11).Value = usr
+            .Cells(here,12).Value = Now
+        Else 'user has resolved an entry
+            .Cells(here,13).Value = Now
+        End If
     End With
 End Function

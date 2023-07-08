@@ -105,7 +105,7 @@ Private Sub myQLB_Change()
       End With
    End If
 End Sub
-'TODO: Save button
+
 Private Sub saveBtn_Click()
    
    '***** Verify that a row is selected first
@@ -119,3 +119,9 @@ Private Sub saveBtn_Click()
    refresh(2)
 End Sub
 'TODO: RESOLVE button
+Private Sub resolveBtn_Click()
+   refID = myQLB.List(myQLB.ListIndex,0)
+   updateLog 2, refID
+   saveNotes Me.notesBx,refID 'just in case user forgets to hit save before resolve
+   refresh(2)
+End Sub
