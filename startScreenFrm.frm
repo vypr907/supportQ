@@ -37,6 +37,10 @@ Private Sub qViewBtn_Click()
     queueView.Show
 End Sub
 
+Private Sub reportsBtn_Click()
+    
+End Sub
+
 Private Sub setupBtn_Click()
     'Dim t As Object
     'Set t = userMaintFrm
@@ -44,3 +48,15 @@ Private Sub setupBtn_Click()
     userMaintFrm.Show
 End Sub
 
+Private Sub test()
+    Dim xlApp As Excel.Application
+    Set xlApp = New Excel.Application
+    Dim filename As String
+    filename = ThisWorkbook.FullName
+
+
+    xlApp.Workbooks.Open Filename:=filename
+    xlApp.Visible = True
+
+    Set xlApp = Nothing
+End Sub

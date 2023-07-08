@@ -139,10 +139,11 @@ Sub start()
         openSesame
     Else
         MsgBox "hi, I'm in regular mode!"
-        startScreenFrm.Show vbModal
         byeFelicia
+        startScreenFrm.Show vbModal
         Application.ScreenUpdating = False
     End If
+
 End Sub
 
 Sub save()
@@ -151,6 +152,7 @@ Sub save()
     ThisWorkbook.Save
     Application.DisplayAlerts = True
 End Sub
+
 Sub gameOver()
     'sub to save and close Excel 
     MsgBox "Game over!!!"
