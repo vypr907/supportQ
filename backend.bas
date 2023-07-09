@@ -39,8 +39,10 @@ Sub queueAdd()
 On Error Resume Next
     'sub to do all the work putting the user's entries into the queue
     
-    Dim lastRow As Integer
+    Dim logRow As Integer
+    Dim qRow As Integer
     Dim currentRow As Integer
+    Dim currentQRow As Integer
     Dim surname As Variant
     Dim fname As Variant
     Dim branch As Variant
@@ -66,13 +68,16 @@ On Error Resume Next
         notes = .notesBx
     End With
 
-    'find the last row
-    lastRow = logSht.Cells(Rows.Count, 1).End(xlUp).row
+    'find the last row of the queue
+    qRow = qSht.Cells(Rows.Count, 1).End(xlUp).row
+    'find the last row of the log
+    logRow = logSht.Cells(Rows.Count, 1).End(xlUp).row
     'get the value
-    refID = logSht.Cells(lastRow, 1).Value
+    refID = logSht.Cells(logRow, 1).Value
     'increment the value and row, and place the value
     refID = refID + 1
-    currentRow = lastRow + 1
+    currentQRow = qRow + 1
+    currentRow = logRow + 1
     logSht.Cells(currentRow, 1).Value = refID
 
     'POST TO LOG
@@ -90,16 +95,16 @@ On Error Resume Next
     End With
     'POST TO QUEUE
     With qSht
-        .Cells(currentRow, 1).Value = refID
-        .Cells(currentRow, 2).Value = Format(Now, "mm/dd/yyyy HH:mm")
-        .Cells(currentRow, 3).Value = surname
-        .Cells(currentRow, 4).Value = fname
-        .Cells(currentRow, 5).Value = branch
-        .Cells(currentRow, 6).Value = rank
-        .Cells(currentRow, 7).Value = shop
-        .Cells(currentRow, 8).Value = phone
-        .Cells(currentRow, 9).Value = reason
-        .Cells(currentRow, 10).Value = notes
+        .Cells(currentQRow, 1).Value = refID
+        .Cells(currentQRow, 2).Value = Format(Now, "mm/dd/yyyy HH:mm")
+        .Cells(currentQRow, 3).Value = surname
+        .Cells(currentQRow, 4).Value = fname
+        .Cells(currentQRow, 5).Value = branch
+        .Cells(currentQRow, 6).Value = rank
+        .Cells(currentQRow, 7).Value = shop
+        .Cells(currentQRow, 8).Value = phone
+        .Cells(currentQRow, 9).Value = reason
+        .Cells(currentQRow, 10).Value = notes
     End With
 
 End Sub
