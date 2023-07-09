@@ -181,16 +181,13 @@ Public Function takeEntry(row As Integer, ref As Integer, usr As String)
 
     'STEP ONE: mark logSht w/user and timestamp
     updateLog 1,ref,usr
-    'With logSht
-    '    .Cells(logRow,11).Value = usr
-    '    .Cells(logRow,12).Value = Now
-    'End With
 
     'STEP TWO: remove entry from queue
     With qSht
         .Cells(row, 1).EntireRow.Delete
     End With
     refresh(1)
+    save
 
 End Function
 
@@ -248,6 +245,7 @@ Public Function saveNotes(text as String, ref as Integer)
     With logSht
         .Cells(dudeWheresMyRow(ref), 10).Value = text
     End With
+    save
 End Function
 
 Public Function updateLog(q as Integer, ref as integer, Optional usr as String)
@@ -261,4 +259,5 @@ Public Function updateLog(q as Integer, ref as integer, Optional usr as String)
             .Cells(here,13).Value = Now
         End If
     End With
+    save
 End Function

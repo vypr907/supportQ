@@ -35,12 +35,9 @@ End Sub
 
 'if user selects a user
 Sub userLB_AfterUpdate()
-    'Dim selectedRow As Integer
-    'selectedRow = Me.userLB.Row + 1
     '***** Verify that a row is selected first
     If userLB.ListIndex > -1 And userLB.Selected(userLB.ListIndex) Then
         '***** Use the data - in my example only columns 2 & 3 are used
-        'MsgBox userLB.List(userLB.ListIndex, 1) & ":" & userLB.List(userLB.ListIndex, 2)
     End If
 End Sub
 Private Sub rmUserBtn_Click()
@@ -52,7 +49,6 @@ Private Sub rmUserBtn_Click()
         'MsgBox userLB.List(userLB.ListIndex, 1) & ":" & userLB.List(userLB.ListIndex, 2)
         selectedRow = userLB.ListIndex + 2
         'MsgBox selectedRow
-
         removeUser (selectedRow)
     End If
 End Sub

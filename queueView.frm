@@ -107,7 +107,13 @@ Private Sub myQLB_Change()
 End Sub
 
 Private Sub saveBtn_Click()
-   
+   MsgBox myQLB.ListIndex
+   If myQLB.ListIndex = "-1" Then
+      'wtf... reload data?
+      'refresh(2)
+      MsgBox "Nothing selected to save!",vbOk + vbCritical,"Error"
+      Exit Sub
+   End If
    '***** Verify that a row is selected first
    If myQLB.ListIndex > -1 And myQLB.Selected(myQLB.ListIndex) Then
       'MsgBox userLB.List(userLB.ListIndex, 1) & ":" & userLB.List(userLB.ListIndex, 2)
