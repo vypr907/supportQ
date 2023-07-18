@@ -120,7 +120,7 @@ Sub clearForm
 End Sub
 
 Sub start()
-    testCode = Application.InputBox("Run in test mode? (1=true, 0=false)" & vbCr _
+    'testCode = Application.InputBox("Run in test mode? (1=true, 0=false)" & vbCr _
     & "1 = True, 0 = False", "Startup", Type:=4)
 
     init
@@ -130,10 +130,13 @@ Sub start()
     Set signIn = New signInFrm
     Set queueScreen = New queueView
     Set addUsrScreen = New addUserFrm
+    Set reportView = New reportFrm
 
-    
+    'temp bypassing
+    testCode = True
+
     If testCode = True Then
-        MsgBox "hi, I'm in test mode!"
+        'MsgBox "hi, I'm in test mode!"
         startScreenFrm.Show vbModeless
         Application.ScreenUpdating = True
         openSesame
@@ -190,6 +193,7 @@ Public Function takeEntry(row As Integer, ref As Integer, usr As String)
 End Function
 
 Sub refresh(q As Integer)
+'Sub to refresh listboxes from either qSht or logSht
     Dim rw as Integer
     Dim i,d,k as Integer
     
@@ -203,7 +207,7 @@ Sub refresh(q As Integer)
             .qSizeBx = .custQLB.ListCount - 1
             .timeBx = Now
         End With
-    Else 'If q = 2 Then 'refresh user queue
+    ElseIf q = 2 Then 'refresh user queue
         'ensure that there is a "user" selected
         k = 0
         With queueView
@@ -226,10 +230,20 @@ Sub refresh(q As Integer)
                 End If
             Next rw
         End With
+    ElseIf q = 3 Then 'refreshing the reports form (from logSht)
+        lastLogRow = logSht.Cells(Rows.Count,1).End(xlUp).Offset(1,0).row
+        With reportView
+            .logLB.ColumnCount = 12
+            '                  #,time,surname,first,branch,shop,phone,reason,notes
+            .logLB.ColumnWidths = "15,0,50,40,35,25,30,60,120,80,80,80"
+            .logLB.RowSource = "Log!A2:M" & lastLogRow
+            .totRecordsBx = .logLB.ListCount - 1
+        End With
     End If
 End Sub
 
 Public Function dudeWheresMyRow(ref as Integer)
+'Function to return the row of a record via Reference Number
     Dim found As Range
     Set found = logSht.Range("A:A").Find(What:=ref)
     dudeWheresMyRow = found.Row

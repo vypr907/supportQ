@@ -13,3 +13,21 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
+
+Sub userForm_Initialize()
+   lastLogRow = logSht.Cells(Rows.Count,1).End(xlUp).Offset(1,0).row
+   With Me
+      .logLB.ColumnCount = 13
+      .logLB.ColumnWidths = "15,70,60,50,35,35,40,60,120,150,25,65,65"
+      .logLB.RowSource = "Log!A2:M" & lastLogRow
+      .totRecordsBx = .logLB.ListCount - 1
+   End With
+End Sub
+
+Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
+   If CloseMode = vbFormControlMenu Then
+      Cancel = True
+      Me.Hide
+   End If
+End Sub

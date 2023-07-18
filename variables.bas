@@ -14,6 +14,7 @@ Global signIn As signInFrm
 Global queueScreen As queueView
 Global addUsrScreen As addUserFrm
 Global authFrm As authFrm
+Global reportView As reportFrm
 
 Global lastUserRow As Integer
 Global lastQRow As Integer

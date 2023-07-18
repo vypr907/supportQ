@@ -38,13 +38,10 @@ Private Sub qViewBtn_Click()
 End Sub
 
 Private Sub reportsBtn_Click()
-    
+    reportView.Show
 End Sub
 
 Private Sub setupBtn_Click()
-    'Dim t As Object
-    'Set t = userMaintFrm
-    't.Show
     userMaintFrm.Show
 End Sub
 
