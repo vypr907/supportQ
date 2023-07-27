@@ -23,6 +23,12 @@ Sub userForm_Initialize()
          .AddItem item.Value
       End With
    Next item
+   'load reasons
+   For Each item in dataSht.Range("reasonCode")
+      With Me.rsnCboBx
+         .AddItem item.Value
+      End With
+   Next item
    
    'load log entries
    Dim i,d,k
@@ -33,20 +39,55 @@ Sub userForm_Initialize()
    With Me
       .logLB.ColumnCount = 13
       .logLB.ColumnWidths = "15,70,60,50,35,35,40,60,120,150,25,65,65"
-      '.logLB.RowSource = "Log!A2:M" & lastLogRow
-      For rw = 2 to lastLogRow
-         .logLB.AddItem
-         For i = 1 to 12
-            .logLB.List(k,i-1) = logSht.Cells(rw,i)
-         Next i
-         k = k + 1
-      Next rw
+      .logLB.RowSource = "Log!A2:M" & lastLogRow
+      'CAN'T USE .AddItem with more than 10 columns
+      'For rw = 2 to lastLogRow
+      '   .logLB.AddItem
+      '   For i = 1 to 12
+      '      .logLB.List(k,i-1) = logSht.Cells(rw,i)
+      '   Next i
+      '   k = k + 1
+      'Next rw
       .totRecordsBx = .logLB.ListCount - 1
    End With
 End Sub
 
 Sub searchBtn_Click()
-   logSearch Me.techCboBx2.Value
+   'lets validate some shit
+   If tktAll.Value = True Then
+      tktState = 0
+   ElseIf tktOpen.Value = True Then
+      tktState = 1
+   ElseIf tktClosed.Value = True Then
+      tktState = 2
+   Else
+      tktState = 0
+   End If
+
+   'put date validation shit here
+   With startDateBx
+      If .Value <> "" Then
+         If IsDate(.Text) Then
+            .Text = Format(DateValue(.Text), "mm/dd/yyyy")
+            startDate = ">=" + .Text
+         Else  
+            MsgBox "Please enter a valid start date! (mm/dd/yyyy)"
+            Exit Sub
+         End If
+      End If
+   End With
+   With endDateBx
+      If .Value <> "" Then
+         If IsDate(.Text) Then
+            .Text = Format(DateValue(.Text), "mm/dd/yyyy")
+            endDate = "<=" + .Text
+         Else  
+            MsgBox "Please enter a valid end date! (mm/dd/yyyy)"
+            Exit Sub
+         End If
+      End If
+   End With
+   logSearch Me.techCboBx2.Value,Me.rsnCboBx.Value,startDate,endDate
 End Sub
 
 Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)

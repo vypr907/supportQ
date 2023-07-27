@@ -118,7 +118,7 @@ On Error Resume Next
     Dim notes As Variant
 
     Call validate
-    Do While good2go = False
+    Do While good2Go = False
     Loop
 
     'load the values from the userform
@@ -154,6 +154,8 @@ On Error Resume Next
         .Cells(currentRow, 8).Value = phone
         .Cells(currentRow, 9).Value = reason
         .Cells(currentRow, 10).Value = notes
+        .Cells(currentRow, 14).Value = False
+        .Cells(currentRow, 15).Value = Format(Now, "mm/dd/yyyy")
     End With
     'POST TO QUEUE
     With qSht

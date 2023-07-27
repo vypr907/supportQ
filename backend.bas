@@ -2,8 +2,6 @@ Attribute VB_Name = "backend"
 Option Explicit
 Option Base 0
 
-'Module Variables
-Dim good2go As Boolean
 
 'loading data sheets
 Sub init()
@@ -11,6 +9,7 @@ Sub init()
     Set qSht = wb.Sheets("Queue")
     Set logSht = wb.Sheets("Log")
     Set dataSht = wb.Sheets("listData")
+    Set searchSht = wb.Sheets("Search")
 
     authorized = False
     lastUserRow = dataSht.Cells(Rows.Count, 7).End(xlUp).Offset(1, 0).row
@@ -29,7 +28,7 @@ End Sub
 'sub to validate all user entries
 Sub validate()
     'check the things, if good:
-    good2go = True
+    good2Go = True
     'else things are not good
     'good2Go = False
     MsgBox ("Hi!")
@@ -126,6 +125,7 @@ Public Function updateLog(q as Integer, ref as integer, Optional usr as String)
             .Cells(here,12).Value = Now
         Else 'user has resolved an entry
             .Cells(here,13).Value = Now
+            .Cells(here,14).Value = True
         End If
     End With
 End Function
