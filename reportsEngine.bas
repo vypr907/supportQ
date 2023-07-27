@@ -37,7 +37,10 @@ Optional startRng as Variant, Optional endRng as Variant)
     
     If Not IsError([searchResults]) Then
         'Set rng = [searchResults]
-        reportView.logLB.RowSource = "searchResults"
+        With reportView
+            .logLB.RowSource = "searchResults"
+            .fndRecordsBx.Value = .logLB.ListCount
+        End With
         'If Application.WorksheetFunction.CountA(rng) = 0 Then '=> This is redundant.
         '    MsgBox "Range is blank"
         'End If
@@ -60,6 +63,99 @@ Optional startRng as Variant, Optional endRng as Variant)
     'End If
 
 End Function
+
+Sub listBoxSort(oLB as MSForms.ListBox, sCol As Integer, sType As Integer, sDir As Integer)
+    Dim vaItems As Variant
+    Dim i As Long, j As Long
+    Dim c As Integer
+    Dim vTemp As Variant
+
+    'Put the items in a variant array
+    vaItems = oLb.List
+
+    'Sort the Array Alphabetically(1)
+    If sType = 1 Then
+        For i = LBound(vaItems, 1) To UBound(vaItems, 1) - 1
+            For j = i + 1 To UBound(vaItems, 1)
+                'Sort Ascending (1)
+                If sDir = 1 Then
+                    If vaItems(i, sCol) > vaItems(j, sCol) Then
+                        For c = 0 To oLb.ColumnCount - 1 'Allows sorting of multi-column ListBoxes
+                            vTemp = vaItems(i, c)
+                            vaItems(i, c) = vaItems(j, c)
+                            vaItems(j, c) = vTemp
+                        Next c
+                    End If
+
+                'Sort Descending (2)
+                ElseIf sDir = 2 Then
+                    If vaItems(i, sCol) < vaItems(j, sCol) Then
+                        For c = 0 To oLb.ColumnCount - 1 'Allows sorting of multi-column ListBoxes
+                            vTemp = vaItems(i, c)
+                            vaItems(i, c) = vaItems(j, c)
+                            vaItems(j, c) = vTemp
+                        Next c
+                    End If
+                End If
+
+            Next j
+        Next i
+        'Sort the Array Numerically(2)
+        '(Substitute CInt with another conversion type (CLng, CDec, etc.) depending on type of numbers in the column)
+    ElseIf sType = 2 Then
+        For i = LBound(vaItems, 1) To UBound(vaItems, 1) - 1
+            For j = i + 1 To UBound(vaItems, 1)
+                'Sort Ascending (1)
+                If sDir = 1 Then
+                    If CInt(vaItems(i, sCol)) > CInt(vaItems(j, sCol)) Then
+                        For c = 0 To oLb.ColumnCount - 1 'Allows sorting of multi-column ListBoxes
+                            vTemp = vaItems(i, c)
+                            vaItems(i, c) = vaItems(j, c)
+                            vaItems(j, c) = vTemp
+                        Next c
+                    End If
+
+                'Sort Descending (2)
+                ElseIf sDir = 2 Then
+                    If CInt(vaItems(i, sCol)) < CInt(vaItems(j, sCol)) Then
+                        For c = 0 To oLb.ColumnCount - 1 'Allows sorting of multi-column ListBoxes
+                            vTemp = vaItems(i, c)
+                            vaItems(i, c) = vaItems(j, c)
+                            vaItems(j, c) = vTemp
+                        Next c
+                    End If
+                End If
+
+            Next j
+        Next i
+    End If
+
+    'Set the list to the array
+    oLb.List = vaItems
+End Sub
+Sub lbSort(sCol As Integer, sType As Integer, sDir As Integer)
+    Dim sortDir as Variant
+    Dim colLtr As String
+    If sDir = 1 Then
+        sortDir = xlAscending
+    Else
+        sortDir = xlDescending
+    End If
+
+    colLtr = ColNumToLetter(sCol)&"1"
+    MsgBox colLtr
+    With searchSht.Sort
+        .SortFields.Add Key:=Range(colLtr), Order:=sortDir
+        '.SortFields.Add Key:=Range(colLtr), Order:=xlAscending
+        .SetRange Range("searchResults")
+        .Header = xlYes
+        .Apply
+    End With
+    With reportView
+        .logLB.RowSource = "searchResults"
+        .fndRecordsBx.Value = .logLB.ListCount
+    End With
+End Sub
 
 Public Sub test2()
     Dim critRng as Range

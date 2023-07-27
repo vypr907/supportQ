@@ -14,6 +14,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
+Dim mcolEvents As Collection
 
 Sub userForm_Initialize()
    'load users
@@ -29,6 +30,18 @@ Sub userForm_Initialize()
          .AddItem item.Value
       End With
    Next item
+
+   'load labels into collection for sort purposes later
+   Dim cLblEvents As clUserFormEvents
+   Dim ctl As MSForms.Control
+   Set mcolEvents = New Collection
+   For Each ctl In Me.Controls
+      If TypeName(ctl) = "Label" Then
+         Set cLblEvents = New clUserFormEvents
+         Set cLblEvents.mLabelGroup = ctl
+         mcolEvents.Add cLblEvents
+      End If
+   Next
    
    'load log entries
    Dim i,d,k
@@ -90,9 +103,46 @@ Sub searchBtn_Click()
    logSearch Me.techCboBx2.Value,Me.rsnCboBx.Value,startDate,endDate
 End Sub
 
+'Sub refLbl_Click()
+'   MsgBox "Hi, I'm REF"
+'End Sub
+
+'Sub timeLbl_Click()
+'   MsgBox "Hi, I'm TIME"
+'End Sub
+
+'Sub lnameLbl_Click()
+'   MsgBox "Hi, I'm SURNAME"
+'End Sub
+
+'Sub branchLbl_Click()
+'End Sub
+
+'Sub rankLbl_Click()
+'End Sub
+
+'Sub shopLbl_Click()
+'End Sub
+
+'Sub rsnLbl_Click()
+'End Sub
+
+'Sub techLbl_Click()
+'End Sub
+
+'Sub takenLbl_Click()
+'End Sub
+
+'Sub resolvedLbl_Click()
+'End Sub
+
 Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
    If CloseMode = vbFormControlMenu Then
       Cancel = True
       Me.Hide
    End If
+End Sub
+
+Private Sub closeBtn_Click()
+   Me.Hide
 End Sub

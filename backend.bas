@@ -129,3 +129,10 @@ Public Function updateLog(q as Integer, ref as integer, Optional usr as String)
         End If
     End With
 End Function
+
+Public Function ColNumToLetter(ColNumber As Integer)
+    Dim ColLetter As String
+    'Convert To Column Letter
+    'ColLetter = Split(Cells(1, ColNumber).Address, "$")(1)
+    ColNumToLetter = Split(Cells(1, ColNumber).Address, "$")(1)
+End Function
