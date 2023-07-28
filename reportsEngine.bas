@@ -143,11 +143,10 @@ Sub lbSort(sCol As Integer, sType As Integer, sDir As Integer)
     End If
 
     colLtr = ColNumToLetter(sCol)&"1"
-    MsgBox colLtr
     With searchSht.Sort
+        .SortFields.Clear
         .SortFields.Add Key:=Range(colLtr), Order:=sortDir
-        '.SortFields.Add Key:=Range(colLtr), Order:=xlAscending
-        .SetRange Range("searchResults")
+        .SetRange Range("sortable")
         .Header = xlYes
         .Apply
     End With
@@ -167,4 +166,35 @@ Public Sub test2()
 
     'run AdvancedFilter
     dataRng.AdvancedFilter xlFilterCopy, critRng, resultRng
+End Sub
+
+Public Sub sortTest()
+init
+    Dim sCol,sType,sDir As Integer
+    Dim sortDir as Variant
+    Dim colLtr As String
+    With searchSht
+        sCol = .Range("Q11").Value
+        sType = .Range("R11").Value
+        sDir = .Range("S11").Value
+    End With
+    If sDir = 1 Then
+        sortDir = xlAscending
+    Else
+        sortDir = xlDescending
+    End If
+
+    'colLtr = ColNumToLetter(sCol)&"1"
+    'MsgBox colLtr
+    'With searchSht.Sort
+    '    .SortFields.Add Key:=Range(sCol), Order:=sortDir
+    '    '.SortFields.Add Key:=Range(colLtr), Order:=xlAscending
+    '    .SetRange Range("searchResults")
+    '    .Header = xlYes
+    '    .Apply
+    'End With
+    
+    Range("sortable").Sort Key1:=Range(sCol), _
+                                Order1:=sortDir, _
+                                Header:=xlYes
 End Sub

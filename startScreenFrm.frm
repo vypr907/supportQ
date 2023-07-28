@@ -38,7 +38,7 @@ Private Sub qViewBtn_Click()
 End Sub
 
 Private Sub reportsBtn_Click()
-    reportView.Show
+    reportView.Show vbModeless
 End Sub
 
 Private Sub setupBtn_Click()

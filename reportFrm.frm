@@ -63,6 +63,8 @@ Sub userForm_Initialize()
       'Next rw
       .totRecordsBx = .logLB.ListCount - 1
    End With
+   'loading searchResults dynamic range
+   'logSearch Me.techCboBx2.Value,Me.rsnCboBx.Value,startDateBx.Value,endDateBx.Value
 End Sub
 
 Sub searchBtn_Click()
@@ -102,39 +104,6 @@ Sub searchBtn_Click()
    End With
    logSearch Me.techCboBx2.Value,Me.rsnCboBx.Value,startDate,endDate
 End Sub
-
-'Sub refLbl_Click()
-'   MsgBox "Hi, I'm REF"
-'End Sub
-
-'Sub timeLbl_Click()
-'   MsgBox "Hi, I'm TIME"
-'End Sub
-
-'Sub lnameLbl_Click()
-'   MsgBox "Hi, I'm SURNAME"
-'End Sub
-
-'Sub branchLbl_Click()
-'End Sub
-
-'Sub rankLbl_Click()
-'End Sub
-
-'Sub shopLbl_Click()
-'End Sub
-
-'Sub rsnLbl_Click()
-'End Sub
-
-'Sub techLbl_Click()
-'End Sub
-
-'Sub takenLbl_Click()
-'End Sub
-
-'Sub resolvedLbl_Click()
-'End Sub
 
 Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
    If CloseMode = vbFormControlMenu Then
