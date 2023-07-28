@@ -15,41 +15,83 @@ Dim tgl As Boolean
 Private Sub mLabelGroup_Click()
     'MsgBox mLabelGroup.Caption & " has been pressed"
     If mLabelGroup.Caption = "#" Then
-      'listBoxSort reportFrm.logLB,0,1,tgl+1
       lbSort 1,1,tgl+1
       If tgl = True Then
         tgl = False
-        MsgBox "Sort Ascending"
       Else
         tgl = True
-        MsgBox "Sort Descending"
       End If
     End If
     If mLabelGroup.Caption = "Time" Then
-      MsgBox "I can sort by REF!"
+      lbSort 2,1,tgl+1
+      If tgl = True Then
+        tgl = False
+      Else
+        tgl = True
+      End If
     End If
     If mLabelGroup.Caption = "Surname" Then
-      MsgBox "I can sort by REF!"
+      lbSort 3,1,tgl+1
+      If tgl = True Then
+        tgl = False
+      Else
+        tgl = True
+      End If
     End If
     If mLabelGroup.Caption = "Branch" Then
-      MsgBox "I can sort by REF!"
+      lbSort 5,1,tgl+1
+      If tgl = True Then
+        tgl = False
+      Else
+        tgl = True
+      End If
     End If
     If mLabelGroup.Caption = "Rank" Then
-      MsgBox "I can sort by REF!"
+      lbSort 6,1,tgl+1
+      If tgl = True Then
+        tgl = False
+      Else
+        tgl = True
+      End If
     End If
     If mLabelGroup.Caption = "Shop" Then
-      MsgBox "I can sort by REF!"
+      lbSort 7,1,tgl+1
+      If tgl = True Then
+        tgl = False
+      Else
+        tgl = True
+      End If
     End If
     If mLabelGroup.Caption = "Reason" Then
-      MsgBox "I can sort by REF!"
+      lbSort 9,1,tgl+1
+      If tgl = True Then
+        tgl = False
+      Else
+        tgl = True
+      End If
     End If
     If mLabelGroup.Caption = "Tech" Then
-      MsgBox "I can sort by REF!"
+      lbSort 11,1,tgl+1
+      If tgl = True Then
+        tgl = False
+      Else
+        tgl = True
+      End If
     End If
     If mLabelGroup.Caption = "Taken" Then
-      MsgBox "I can sort by REF!"
+      lbSort 12,1,tgl+1
+      If tgl = True Then
+        tgl = False
+      Else
+        tgl = True
+      End If
     End If
     If mLabelGroup.Caption = "Resolved" Then
-      MsgBox "I can sort by REF!"
+      lbSort 13,1,tgl+1
+      If tgl = True Then
+        tgl = False
+      Else
+        tgl = True
+      End If
     End If
 End Sub
