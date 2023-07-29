@@ -38,13 +38,10 @@ Private Sub qViewBtn_Click()
 End Sub
 
 Private Sub reportsBtn_Click()
-    MsgBox "Sorry, still under construction!",vbOk,"ERR404: FUNCTION NOT FOUND"
+    reportView.Show vbModeless
 End Sub
 
 Private Sub setupBtn_Click()
-    'Dim t As Object
-    'Set t = userMaintFrm
-    't.Show
     userMaintFrm.Show
 End Sub
 
