@@ -114,6 +114,7 @@ Public Function saveNotes(text as String, ref as Integer)
     With logSht
         .Cells(dudeWheresMyRow(ref), 10).Value = text
     End With
+    save
 End Function
 
 Public Function updateLog(q as Integer, ref as integer, Optional usr as String)
@@ -128,6 +129,14 @@ Public Function updateLog(q as Integer, ref as integer, Optional usr as String)
             .Cells(here,14).Value = True
         End If
     End With
+    
+End Function
+
+Public Function ColNumToLetter(ColNumber As Integer)
+    Dim ColLetter As String
+    'Convert To Column Letter
+    'ColLetter = Split(Cells(1, ColNumber).Address, "$")(1)
+    ColNumToLetter = Split(Cells(1, ColNumber).Address, "$")(1)
 End Function
 
 Public Function ColNumToLetter(ColNumber As Integer)
