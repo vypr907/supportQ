@@ -107,6 +107,7 @@ On Error Resume Next
     'sub to do all the work putting the user's entries into the queue
     
     Dim lastRow As Integer
+    Dim qLastRow As Integer
     Dim currentRow As Integer
     Dim surname As Variant
     Dim fname As Variant
@@ -135,6 +136,7 @@ On Error Resume Next
 
     'find the last row
     lastRow = logSht.Cells(Rows.Count, 1).End(xlUp).row
+    qLastRow = qSht.Cells(Rows.Count,1).End(xlUp).row + 1
     'get the value
     refID = logSht.Cells(lastRow, 1).Value
     'increment the value and row, and place the value
@@ -159,16 +161,15 @@ On Error Resume Next
     End With
     'POST TO QUEUE
     With qSht
-        .Cells(currentRow, 1).Value = refID
-        .Cells(currentRow, 2).Value = Format(Now, "mm/dd/yyyy HH:mm")
-        .Cells(currentRow, 3).Value = surname
-        .Cells(currentRow, 4).Value = fname
-        .Cells(currentRow, 5).Value = branch
-        .Cells(currentRow, 6).Value = rank
-        .Cells(currentRow, 7).Value = shop
-        .Cells(currentRow, 8).Value = phone
-        .Cells(currentRow, 9).Value = reason
-        .Cells(currentRow, 10).Value = notes
+        .Cells(qLastRow, 1).Value = refID
+        .Cells(qLastRow, 2).Value = Format(Now, "mm/dd/yyyy HH:mm")
+        .Cells(qLastRow, 3).Value = surname
+        .Cells(qLastRow, 4).Value = fname
+        .Cells(qLastRow, 5).Value = branch
+        .Cells(qLastRow, 6).Value = rank
+        .Cells(qLastRow, 7).Value = shop
+        .Cells(qLastRow, 8).Value = phone
+        .Cells(qLastRow, 9).Value = reason
+        .Cells(qLastRow, 10).Value = notes
     End With
-
 End Sub
