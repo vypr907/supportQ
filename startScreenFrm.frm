@@ -42,7 +42,7 @@ Private Sub reportsBtn_Click()
     Call tempXL
     'copy data to temp xl instance
     'show userform
-    'reportView.Show vbModeless
+    reportView.Show vbModeless
     'close/delete temp xl instance
 End Sub
 

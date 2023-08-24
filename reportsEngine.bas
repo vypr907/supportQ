@@ -5,51 +5,53 @@ Attribute VB_Name = "reportsEngine"
 Public Function logSearch(Optional tech as String, Optional rsn as String, _
 Optional startRng as Variant, Optional endRng as Variant)
     'TODO: CODE GOES HERE
-    Dim status as String
-    Dim isRngEmpty as Integer
-    'Dim rng As Range
-    'place the values in the criteria range
-    If tktState = 0 Then
-        status = ""
-    ElseIf tktState = 1 Then
-        status = False
-    Else
-        status = True
-    End If
+    With temp
 
-    With searchSht
-        .Cells(2,18).Value = startRng
-        .Cells(2,19).Value = endRng
-        .Cells(2,20).Value = tech
-        .Cells(2,21).Value = status
-        .Cells(2,22).Value = rsn
-    End With
+        Dim status as String
+        Dim isRngEmpty as Integer
+        'Dim rng As Range
+        'place the values in the criteria range
+        If tktState = 0 Then
+            status = ""
+        ElseIf tktState = 1 Then
+            status = False
+        Else
+            status = True
+        End If
 
-    Dim critRng as Range
-    Set critRng = Range("myCriteria")
-    Dim dataRng as Range
-    Set dataRng = Range("logSearchRng")
-    Dim resultRng as Range
-    Set resultRng = Range("copyToRng")
-
-    'run AdvancedFilter
-    dataRng.AdvancedFilter xlFilterCopy, critRng, resultRng
-    
-    If Not IsError([searchResults]) Then
-        'Set rng = [searchResults]
-        With reportView
-            .logLB.RowSource = "searchResults"
-            .fndRecordsBx.Value = .logLB.ListCount
+        With searchSht
+            .Cells(2,18).Value = startRng
+            .Cells(2,19).Value = endRng
+            .Cells(2,20).Value = tech
+            .Cells(2,21).Value = status
+            .Cells(2,22).Value = rsn
         End With
-        'If Application.WorksheetFunction.CountA(rng) = 0 Then '=> This is redundant.
-        '    MsgBox "Range is blank"
-        'End If
-    Else
-        'MsgBox "No such range" '==> This is practically your black range as you are using dynamic named range.
-        MsgBox "No results found! Resetting..."
-        reportView.logLB.RowSource = "Log!A2:M" & lastLogRow
-        reportView.rsnCboBx.ListIndex = -1
-    End If
+
+        Dim critRng as Range
+        Set critRng = Range("myCriteria")
+        Dim dataRng as Range
+        Set dataRng = Range("logSearchRng")
+        Dim resultRng as Range
+        Set resultRng = Range("copyToRng")
+
+        'run AdvancedFilter
+        dataRng.AdvancedFilter xlFilterCopy, critRng, resultRng
+        
+        If Not IsError([searchResults]) Then
+            'Set rng = [searchResults]
+            With reportView
+                .logLB.RowSource = "searchResults"
+                .fndRecordsBx.Value = .logLB.ListCount
+            End With
+            'If Application.WorksheetFunction.CountA(rng) = 0 Then '=> This is redundant.
+            '    MsgBox "Range is blank"
+            'End If
+        Else
+            'MsgBox "No such range" '==> This is practically your black range as you are using dynamic named range.
+            MsgBox "No results found! Resetting..."
+            reportView.logLB.RowSource = "Log!A2:M" & lastLogRow
+            reportView.rsnCboBx.ListIndex = -1
+        End If
     'Set rng = [searchResults]
     'If Application.WorksheetFunction.CountA(rng) = 0 Then
     '    MsgBox "Range is blank!"
@@ -61,7 +63,7 @@ Optional startRng as Variant, Optional endRng as Variant)
     '    MsgBox "No results found! Resetting..."
     '    reportView.logLB.RowSource = "Log!A2:M" & lastLogRow
     'End If
-
+    End With
 End Function
 
 Sub listBoxSort(oLB as MSForms.ListBox, sCol As Integer, sType As Integer, sDir As Integer)
@@ -201,16 +203,19 @@ Public Sub tempXL()
 
     If Dir(filePath) <> "" Then
         MsgBox "File exists!"
+        Kill(filePath) 'easier to wipe and re-create, than to try to run comparisons
+        Set temp = Workbooks.Add
+        temp.SaveAs folderPath & filename
+        'Set temp = Workbooks.Open(filePath)
     Else
         MsgBox "File does not exist, creating..."
         Set temp = Workbooks.Add
         temp.SaveAs folderPath & filename
     End If
 
-
     'copy needed sheets to temp workbook
     wb.Sheets(Array("Log", "Search")).Copy Before:=temp.Sheets(1)
     MsgBox "hello"
     
-    temp.Close SaveChanges:=False
+    'temp.Close SaveChanges:=True
 End Sub

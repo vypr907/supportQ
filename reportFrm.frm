@@ -53,18 +53,8 @@ Sub userForm_Initialize()
       .logLB.ColumnCount = 13
       .logLB.ColumnWidths = "15,70,60,50,35,35,40,60,120,150,25,65,65"
       .logLB.RowSource = "Log!A2:M" & lastLogRow
-      'CAN'T USE .AddItem with more than 10 columns
-      'For rw = 2 to lastLogRow
-      '   .logLB.AddItem
-      '   For i = 1 to 12
-      '      .logLB.List(k,i-1) = logSht.Cells(rw,i)
-      '   Next i
-      '   k = k + 1
-      'Next rw
       .totRecordsBx = .logLB.ListCount - 1
    End With
-   'loading searchResults dynamic range
-   'logSearch Me.techCboBx2.Value,Me.rsnCboBx.Value,startDateBx.Value,endDateBx.Value
 End Sub
 
 Sub searchBtn_Click()
@@ -114,4 +104,5 @@ End Sub
 
 Private Sub closeBtn_Click()
    Me.Hide
+   temp.Close SaveChanges:=False
 End Sub
