@@ -28,3 +28,7 @@ Global good2Go As Boolean
 Global tktState As Integer
 Global startDate As String
 Global endDate As String
+
+'variables for manipulating temp xl instance and wb
+Global temp As Workbook
+Global xlApp As Excel.Application

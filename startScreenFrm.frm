@@ -38,22 +38,14 @@ Private Sub qViewBtn_Click()
 End Sub
 
 Private Sub reportsBtn_Click()
-    reportView.Show vbModeless
+    'create new xl instance
+    Call tempXL
+    'copy data to temp xl instance
+    'show userform
+    'reportView.Show vbModeless
+    'close/delete temp xl instance
 End Sub
 
 Private Sub setupBtn_Click()
     userMaintFrm.Show
-End Sub
-
-Private Sub test()
-    Dim xlApp As Excel.Application
-    Set xlApp = New Excel.Application
-    Dim filename As String
-    filename = ThisWorkbook.FullName
-
-
-    xlApp.Workbooks.Open Filename:=filename
-    xlApp.Visible = True
-
-    Set xlApp = Nothing
 End Sub

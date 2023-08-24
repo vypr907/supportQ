@@ -183,18 +183,34 @@ init
     Else
         sortDir = xlDescending
     End If
-
-    'colLtr = ColNumToLetter(sCol)&"1"
-    'MsgBox colLtr
-    'With searchSht.Sort
-    '    .SortFields.Add Key:=Range(sCol), Order:=sortDir
-    '    '.SortFields.Add Key:=Range(colLtr), Order:=xlAscending
-    '    .SetRange Range("searchResults")
-    '    .Header = xlYes
-    '    .Apply
-    'End With
     
     Range("sortable").Sort Key1:=Range(sCol), _
                                 Order1:=sortDir, _
                                 Header:=xlYes
+End Sub
+
+Public Sub tempXL()
+    Dim filename As String
+    Dim folderPath As String
+    Dim filePath As String
+
+    folderPath = "C:\"
+
+    filename = "temp_reportData.xlsx"
+    filePath = folderPath & filename
+
+    If Dir(filePath) <> "" Then
+        MsgBox "File exists!"
+    Else
+        MsgBox "File does not exist, creating..."
+        Set temp = Workbooks.Add
+        temp.SaveAs folderPath & filename
+    End If
+
+
+    'copy needed sheets to temp workbook
+    wb.Sheets(Array("Log", "Search")).Copy Before:=temp.Sheets(1)
+    MsgBox "hello"
+    
+    temp.Close SaveChanges:=False
 End Sub
