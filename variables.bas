@@ -6,6 +6,8 @@ Global qSht As Worksheet
 Global logSht As Worksheet
 Global dataSht As Worksheet
 Global searchSht As Worksheet
+Global tmpSearch As Worksheet
+Global tmpLog As Worksheet
 
 Public password As Variant
 Public refID As Integer

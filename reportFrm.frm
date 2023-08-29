@@ -19,6 +19,7 @@ Dim mcolEvents As Collection
 Sub userForm_Initialize()
    'load users
    Dim item As Variant
+   
    For Each item In dataSht.Range("users")
       With Me.techCboBx2
          .AddItem item.Value
@@ -44,16 +45,19 @@ Sub userForm_Initialize()
    Next
    
    'load log entries
-   Dim i,d,k
-   i = 0
-   d = 0
-   k = 0
-   lastLogRow = logSht.Cells(Rows.Count,1).End(xlUp).Offset(1,0).row
-   With Me
-      .logLB.ColumnCount = 13
-      .logLB.ColumnWidths = "15,70,60,50,35,35,40,60,120,150,25,65,65"
-      .logLB.RowSource = "Log!A2:M" & lastLogRow
-      .totRecordsBx = .logLB.ListCount - 1
+   'from temp
+   With temp
+      Dim i,d,k
+      i = 0
+      d = 0
+      k = 0
+      lastLogRow = logSht.Cells(Rows.Count,1).End(xlUp).Offset(1,0).row
+      With Me
+         .logLB.ColumnCount = 13
+         .logLB.ColumnWidths = "15,70,60,50,35,35,40,60,120,150,25,65,65"
+         .logLB.RowSource = "Log!A2:M" & lastLogRow
+         .totRecordsBx = .logLB.ListCount - 1
+      End With
    End With
 End Sub
 

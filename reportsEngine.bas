@@ -5,8 +5,14 @@ Attribute VB_Name = "reportsEngine"
 Public Function logSearch(Optional tech as String, Optional rsn as String, _
 Optional startRng as Variant, Optional endRng as Variant)
     'TODO: CODE GOES HERE
-    With temp
+    Dim critRng As Range
+    Dim dataRng as Range
+    Dim resultRng as Range
 
+    'temp increasing visibility
+    Application.ScreenUpdating = True
+    temp.Activate
+    With temp
         Dim status as String
         Dim isRngEmpty as Integer
         'Dim rng As Range
@@ -19,20 +25,23 @@ Optional startRng as Variant, Optional endRng as Variant)
             status = True
         End If
 
-        With searchSht
+        'see what's happening
+        tmpSearch.Activate
+
+        'With searchSht
+        With tmpSearch
             .Cells(2,18).Value = startRng
             .Cells(2,19).Value = endRng
             .Cells(2,20).Value = tech
             .Cells(2,21).Value = status
             .Cells(2,22).Value = rsn
+
+            Set critRng = .Range("myCriteria")
+            Set dataRng = .Range("logSearchRng")
+            Set resultRng = .Range("copyToRng")
         End With
 
-        Dim critRng as Range
-        Set critRng = Range("myCriteria")
-        Dim dataRng as Range
-        Set dataRng = Range("logSearchRng")
-        Dim resultRng as Range
-        Set resultRng = Range("copyToRng")
+        
 
         'run AdvancedFilter
         dataRng.AdvancedFilter xlFilterCopy, critRng, resultRng
@@ -138,6 +147,15 @@ End Sub
 Sub lbSort(sCol As Integer, sType As Integer, sDir As Integer)
     Dim sortDir as Variant
     Dim colLtr As String
+
+    Dim sortRng As Range
+    Dim resultsRng As Range
+
+    With tmpSearch
+        Set sortRng = .Range("sortable")
+        Set resultsRng = .Range("searchResults")
+    End With
+
     If sDir = 1 Then
         sortDir = xlAscending
     Else
@@ -145,15 +163,19 @@ Sub lbSort(sCol As Integer, sType As Integer, sDir As Integer)
     End If
 
     colLtr = ColNumToLetter(sCol)&"1"
-    With searchSht.Sort
+    'With searchSht.Sort
+    With tmpSearch.Sort
         .SortFields.Clear
         .SortFields.Add Key:=Range(colLtr), Order:=sortDir
-        .SetRange Range("sortable")
+        '.SetRange Range("sortable")
+        .SetRange sortRng
         .Header = xlYes
         .Apply
     End With
+    temp.Activate
     With reportView
-        .logLB.RowSource = "searchResults"
+        '.logLB.RowSource = tmpSearch.Range("searchResults")
+        .logLB.RowSource = resultsRng
         .fndRecordsBx.Value = .logLB.ListCount
     End With
 End Sub
@@ -189,33 +211,4 @@ init
     Range("sortable").Sort Key1:=Range(sCol), _
                                 Order1:=sortDir, _
                                 Header:=xlYes
-End Sub
-
-Public Sub tempXL()
-    Dim filename As String
-    Dim folderPath As String
-    Dim filePath As String
-
-    folderPath = "C:\"
-
-    filename = "temp_reportData.xlsx"
-    filePath = folderPath & filename
-
-    If Dir(filePath) <> "" Then
-        MsgBox "File exists!"
-        Kill(filePath) 'easier to wipe and re-create, than to try to run comparisons
-        Set temp = Workbooks.Add
-        temp.SaveAs folderPath & filename
-        'Set temp = Workbooks.Open(filePath)
-    Else
-        MsgBox "File does not exist, creating..."
-        Set temp = Workbooks.Add
-        temp.SaveAs folderPath & filename
-    End If
-
-    'copy needed sheets to temp workbook
-    wb.Sheets(Array("Log", "Search")).Copy Before:=temp.Sheets(1)
-    MsgBox "hello"
-    
-    'temp.Close SaveChanges:=True
 End Sub

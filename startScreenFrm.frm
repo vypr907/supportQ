@@ -38,12 +38,9 @@ Private Sub qViewBtn_Click()
 End Sub
 
 Private Sub reportsBtn_Click()
-    'create new xl instance
-    Call tempXL
-    'copy data to temp xl instance
     'show userform
     reportView.Show vbModeless
-    'close/delete temp xl instance
+    temp.Activate
 End Sub
 
 Private Sub setupBtn_Click()
