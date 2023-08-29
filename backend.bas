@@ -11,6 +11,11 @@ Sub init()
     Set dataSht = wb.Sheets("listData")
     Set searchSht = wb.Sheets("Search")
 
+    tempXL
+    Set tmpSearch = temp.Sheets("Search")
+    Set tmpLog = temp.Sheets("Log")
+    wb.Activate
+
     authorized = False
     lastUserRow = dataSht.Cells(Rows.Count, 7).End(xlUp).Offset(1, 0).row
     'activeworkbook.Names.Add Name:="users", RefersToR2C11:="=COUNTA(C" & ColNo & ")"
@@ -31,7 +36,7 @@ Sub validate()
     good2Go = True
     'else things are not good
     'good2Go = False
-    MsgBox ("Hi!")
+    'MsgBox ("Hi!")
 End Sub
 
 Sub clearForm
@@ -139,9 +144,34 @@ Public Function ColNumToLetter(ColNumber As Integer)
     ColNumToLetter = Split(Cells(1, ColNumber).Address, "$")(1)
 End Function
 
-Public Function ColNumToLetter(ColNumber As Integer)
-    Dim ColLetter As String
-    'Convert To Column Letter
-    'ColLetter = Split(Cells(1, ColNumber).Address, "$")(1)
-    ColNumToLetter = Split(Cells(1, ColNumber).Address, "$")(1)
-End Function
+Public Sub tempXL()
+    Dim filename As String
+    Dim folderPath As String
+    Dim filePath As String
+
+    folderPath = "C:\"
+
+    filename = "temp_reportData.xlsx"
+    filePath = folderPath & filename
+
+    If Dir(filePath) <> "" Then
+        'MsgBox "File exists!"
+        'commenting out to test use test workbook instead
+        Kill(filePath) 'easier to wipe and re-create, than to try to run comparisons
+        Set temp = Workbooks.Add
+        'Set temp = Workbooks.Open(filePath)
+        temp.SaveAs folderPath & filename
+    Else
+        'MsgBox "File does not exist, creating..."
+        Set temp = Workbooks.Add
+        temp.SaveAs folderPath & filename
+    End If
+
+    'copy needed sheets to temp workbook
+    wb.Sheets(Array("Log", "Search")).Copy Before:=temp.Sheets(1)
+    'MsgBox "hello"
+    
+    'hows about we just hide the workbook instead of closing it
+    'temp.Close SaveChanges:=True
+    temp.Windows(1).Visible = False
+End Sub

@@ -19,6 +19,7 @@ Dim mcolEvents As Collection
 Sub userForm_Initialize()
    'load users
    Dim item As Variant
+   
    For Each item In dataSht.Range("users")
       With Me.techCboBx2
          .AddItem item.Value
@@ -44,27 +45,20 @@ Sub userForm_Initialize()
    Next
    
    'load log entries
-   Dim i,d,k
-   i = 0
-   d = 0
-   k = 0
-   lastLogRow = logSht.Cells(Rows.Count,1).End(xlUp).Offset(1,0).row
-   With Me
-      .logLB.ColumnCount = 13
-      .logLB.ColumnWidths = "15,70,60,50,35,35,40,60,120,150,25,65,65"
-      .logLB.RowSource = "Log!A2:M" & lastLogRow
-      'CAN'T USE .AddItem with more than 10 columns
-      'For rw = 2 to lastLogRow
-      '   .logLB.AddItem
-      '   For i = 1 to 12
-      '      .logLB.List(k,i-1) = logSht.Cells(rw,i)
-      '   Next i
-      '   k = k + 1
-      'Next rw
-      .totRecordsBx = .logLB.ListCount - 1
+   'from temp
+   With temp
+      Dim i,d,k
+      i = 0
+      d = 0
+      k = 0
+      lastLogRow = logSht.Cells(Rows.Count,1).End(xlUp).Offset(1,0).row
+      With Me
+         .logLB.ColumnCount = 13
+         .logLB.ColumnWidths = "15,70,60,50,35,35,40,60,120,150,25,65,65"
+         .logLB.RowSource = "Log!A2:M" & lastLogRow
+         .totRecordsBx = .logLB.ListCount - 1
+      End With
    End With
-   'loading searchResults dynamic range
-   'logSearch Me.techCboBx2.Value,Me.rsnCboBx.Value,startDateBx.Value,endDateBx.Value
 End Sub
 
 Sub searchBtn_Click()
@@ -114,4 +108,5 @@ End Sub
 
 Private Sub closeBtn_Click()
    Me.Hide
+   temp.Close SaveChanges:=False
 End Sub

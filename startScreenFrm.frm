@@ -38,22 +38,12 @@ Private Sub qViewBtn_Click()
 End Sub
 
 Private Sub reportsBtn_Click()
+    'show userform
+    Application.ScreenUpdating = False
+    temp.Windows(1).Visible = True
     reportView.Show vbModeless
 End Sub
 
 Private Sub setupBtn_Click()
     userMaintFrm.Show
-End Sub
-
-Private Sub test()
-    Dim xlApp As Excel.Application
-    Set xlApp = New Excel.Application
-    Dim filename As String
-    filename = ThisWorkbook.FullName
-
-
-    xlApp.Workbooks.Open Filename:=filename
-    xlApp.Visible = True
-
-    Set xlApp = Nothing
 End Sub

@@ -6,6 +6,8 @@ Global qSht As Worksheet
 Global logSht As Worksheet
 Global dataSht As Worksheet
 Global searchSht As Worksheet
+Global tmpSearch As Worksheet
+Global tmpLog As Worksheet
 
 Public password As Variant
 Public refID As Integer
@@ -28,3 +30,7 @@ Global good2Go As Boolean
 Global tktState As Integer
 Global startDate As String
 Global endDate As String
+
+'variables for manipulating temp xl instance and wb
+Global temp As Workbook
+Global xlApp As Excel.Application
