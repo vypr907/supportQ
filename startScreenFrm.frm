@@ -39,8 +39,9 @@ End Sub
 
 Private Sub reportsBtn_Click()
     'show userform
+    Application.ScreenUpdating = False
+    temp.Windows(1).Visible = True
     reportView.Show vbModeless
-    temp.Activate
 End Sub
 
 Private Sub setupBtn_Click()
