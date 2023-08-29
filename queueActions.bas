@@ -22,6 +22,7 @@ Attribute VB_Name = "queueActions"
 ' 1. Main 2. User 3. Log
 Sub refresh(q As Integer)
 'Sub to refresh listboxes from either qSht or logSht
+    save
     Dim rw as Integer
     Dim i,d,k as Integer
     
@@ -98,7 +99,7 @@ Public Function takeEntry(row As Integer, ref As Integer, usr As String)
         .Cells(row, 1).EntireRow.Delete
     End With
     refresh(1)
-
+    save
 End Function
 
 
@@ -172,4 +173,6 @@ On Error Resume Next
         .Cells(qLastRow, 9).Value = reason
         .Cells(qLastRow, 10).Value = notes
     End With
+    save
+    
 End Sub
