@@ -41,6 +41,7 @@ Private Sub reportsBtn_Click()
     'show userform
     Application.ScreenUpdating = False
     temp.Windows(1).Visible = True
+    reportsRun
     reportView.Show vbModeless
 End Sub
 
