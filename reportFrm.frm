@@ -109,5 +109,4 @@ End Sub
 Private Sub closeBtn_Click()
    Me.Hide
    temp.Windows(1).Visible = False
-   'temp.Close SaveChanges:=False
 End Sub

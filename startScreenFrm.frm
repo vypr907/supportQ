@@ -48,3 +48,9 @@ End Sub
 Private Sub setupBtn_Click()
     userMaintFrm.Show
 End Sub
+
+Private Sub exitBtn_Click()
+    MsgBox "No."
+    temp.Close SaveChanges:=False
+    gameOver
+End Sub

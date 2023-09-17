@@ -36,20 +36,19 @@ Sub byeFelicia()
     End If
 End Sub
 
-Sub gameOver()
+'Public Sub gameOver()
 'sub to save and close Excel
-    MsgBox "Game over!!!"
-    If testCode = False Then
-        byeFelicia
-        Windows("SupportQ_DEV.xlsm").Activate 'make sure to only close this excel doc
-        Application.DisplayAlerts = False
-        ThisWorkbook.Save
-        Application.DisplayAlerts = True
-        ActiveWorkbook.Close SaveChanges:=False
-        'Application.Quit
-    End If
-    
-End Sub
+'    MsgBox "Game over!!!"
+'    If testCode = False Then
+'        byeFelicia
+'        Windows("SupportQ_DEV.xlsm").Activate 'make sure to only close this excel doc
+'        Application.DisplayAlerts = False
+'        ThisWorkbook.Save
+'        Application.DisplayAlerts = True
+'        ActiveWorkbook.Close SaveChanges:=False
+'        Application.Quit
+'    End If 
+'End Sub
 
 Function authorizer() as Boolean
 'function to authenticate you to view queue

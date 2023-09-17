@@ -101,7 +101,7 @@ Sub gameOver()
     ThisWorkbook.Save
     Application.DisplayAlerts = True
     ActiveWorkbook.Close SaveChanges:=False
-    
+    Application.Quit
 End Sub
 
 Public Function dudeWheresMyRow(ref as Integer)
