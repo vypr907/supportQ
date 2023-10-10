@@ -1,4 +1,3 @@
-Attribute VB_Name = "variables"
 'Just the Global variables
 
 Global wb As Workbook
@@ -10,6 +9,7 @@ Global tmpSearch As Worksheet
 Global tmpLog As Worksheet
 
 Public password As Variant
+Public namer As String
 Public refID As Integer
 
 Global startScreen As startScreenFrm

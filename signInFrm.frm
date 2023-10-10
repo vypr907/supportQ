@@ -1,19 +1,3 @@
-VERSION 5.00
-Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} signInFrm 
-   Caption         =   "Sign In"
-   ClientHeight    =   10770
-   ClientLeft      =   120
-   ClientTop       =   465
-   ClientWidth     =   9225.001
-   OleObjectBlob   =   "signInFrm.frx":0000
-   StartUpPosition =   1  'CenterOwner
-End
-Attribute VB_Name = "signInFrm"
-Attribute VB_GlobalNameSpace = False
-Attribute VB_Creatable = False
-Attribute VB_PredeclaredId = True
-Attribute VB_Exposed = False
-
 Option Explicit
 
 Private Sub userForm_Initialize()
@@ -50,20 +34,35 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
 
    If CloseMode = vbFormControlMenu Then
       Cancel = True
-      'response = MsgBox("Please enter")
       Call comparison
-      'If InputBox("Enter password to close: ") = "609eacoms" Then
       If password = "609eacoms" Then
          Cancel = False
       Else
-         MsgBox ("Authentication Failure")
+         MsgBox "Invalid Password", , "Authentication Failure"
+         Cancel = True
       End If
    End If
 End Sub
 
 Private Sub submitBtn_Click()
-   queueAdd
-   save
-   clearForm
-   surnameBx.SetFocus
+    'test for blank
+    With Me
+        If .surnameBx = "" Or _
+            .fnameBx = "" Or _
+            .rankCboBx.ListIndex < 1 Or _
+            .branchCboBx.ListIndex < 1 Or _
+            .phoneBx = "" Or _
+            .reasonCboBx.ListIndex < 1 Then
+            MsgBox "Please complete all fields!", , "Missing Info"
+            Exit Sub
+        End If
+    End With
+    queueAdd
+    save
+    clearForm
+    surnameBx.SetFocus
+    popUp "Thank you! Your Reference number is " & refID & ", and you are position " & _
+        queuePos & " in the queue!", "Submission Received", 5
+        
 End Sub
+

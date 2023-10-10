@@ -1,30 +1,18 @@
-Attribute VB_Name = "queueActions"
 'For all things pertaining to the operation of a functional queue
 
-'Proposed:
-' queue is one sheet. "my queue" is filtered based off technician initials in
-' respective column. "admin queue" shows all current entries. "main queue" shows
-' only un-taken entries. log is merely a backup of the queue.
-'
-'Original Idea:
-' main queue is one sheet. "my queue" is separate sheet, populated by the 'Take'
-' button. Main queue grows and shrinks as users submit and technicians take.
-' Upon technician RESOLVE, entry is then copied to "resolved queue" or Log sheet
-' and removed from "my queue". "Admin queue" is just Log.
-'
 'Actual Implementation:
 ' Queue is one sheet. Grows via user submit, and shrinks via tech 'Take' button.
-' "My Queue" is filtered by tech and resolved status from Log sheet. Log is one 
-' sheet that is updated with Tech actions such as 'Take', notes editing, and 
+' "My Queue" is filtered by tech and resolved status from Log sheet. Log is one
+' sheet that is updated with Tech actions such as 'Take', notes editing, and
 ' 'Resolve' button.
 
 'TODO: loadQueue function. accepts int variable to determine which q to load
-' 1. Main 2. User 3. Log
+' 1. Main 2. User 3. Log(not used)
 Sub refresh(q As Integer)
 'Sub to refresh listboxes from either qSht or logSht
     save
-    Dim rw as Integer
-    Dim i,d,k as Integer
+    Dim rw As Integer
+    Dim i, d, k As Integer
     
     If q = 1 Then 'refresh main queue
         lastQRow = qSht.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).row
@@ -41,18 +29,18 @@ Sub refresh(q As Integer)
         k = 0
         With queueView
             .myQLB.Clear
-            If .techCboBx.ListIndex = -1 Then
-                MsgBox "Sorry, a user must be selected",vbOk + vbExclamation,"Missing User"
+            If .techCboBx.ListIndex = -1 Or .techCboBx.Value = "" Then
+                MsgBox "Sorry, a user must be selected", vbOK + vbExclamation, "Missing User"
                 .MultiPage1.Value = 0
                 .techCboBx.SetFocus
             End If
-            lastLogRow = logSht.Cells(Rows.Count, 1).End(xlUp).Offset(1,0).row
-            For rw = 2 to lastLogRow
-                If logSht.Range("K" & CStr(rw))= .techCboBx.Value Then 'if user's initials are in tech column
+            lastLogRow = logSht.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).row
+            For rw = 2 To lastLogRow
+                If logSht.Range("K" & CStr(rw)) = .techCboBx.Value Then 'if user's initials are in tech column
                     If IsEmpty(logSht.Range("M" & CStr(rw))) Then 'only load unresolved "tickets"
-                        .myQLB.AddItem 
-                        For i = 1 to 10
-                            .myQLB.List(k,i-1) = logSht.Cells(rw,i)
+                        .myQLB.AddItem
+                        For i = 1 To 10
+                            .myQLB.List(k, i - 1) = logSht.Cells(rw, i)
                         Next i
                         k = k + 1
                     End If
@@ -63,17 +51,15 @@ Sub refresh(q As Integer)
         i = 0
         d = 0
         k = 0
-        lastLogRow = logSht.Cells(Rows.Count,1).End(xlUp).Offset(1,0).row
+        lastLogRow = logSht.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).row
         With reportView
             .logLB.ColumnCount = 12
             '                  #,time,surname,first,branch,shop,phone,reason,notes
             .logLB.ColumnWidths = "15,0,50,40,35,25,30,60,120,80,80,80"
-            'cannot use rowsource due to later need to use .additem
-            '.logLB.RowSource = "Log!A2:M" & lastLogRow
-            For rw = 2 to lastLogRow
+            For rw = 2 To lastLogRow
                 .logLB.AddItem
-                For i = 1 to 12
-                    .logLB.List(k,i-1) = logSht.Cells(rw,i)
+                For i = 1 To 12
+                    .logLB.List(k, i - 1) = logSht.Cells(rw, i)
                 Next i
                 k = k + 1
             Next rw
@@ -86,19 +72,28 @@ End Sub
 Public Function takeEntry(row As Integer, ref As Integer, usr As String)
     Dim logRow As Integer
     Dim found As Range
-    MsgBox "Yoink!"
+    
+    With queueView
+        If .techCboBx.ListIndex = -1 Or .techCboBx.Value = "" Then
+            MsgBox "Sorry, a user must be selected.", vbOK + vbExclamation, "Missing User"
+            .techCboBx.SetFocus
+            Exit Function
+        End If
+    End With
+    
+    MsgBox "Yoink!", , ":D"
     
     Set found = logSht.Range("A:A").Find(What:=ref)
-    logRow = found.Row
+    logRow = found.row
 
     'STEP ONE: mark logSht w/user and timestamp
-    updateLog 1,ref,usr
+    updateLog 1, ref, usr
 
     'STEP TWO: remove entry from queue
     With qSht
         .Cells(row, 1).EntireRow.Delete
     End With
-    refresh(1)
+    refresh (1)
     save
 End Function
 
@@ -137,7 +132,7 @@ On Error Resume Next
 
     'find the last row
     lastRow = logSht.Cells(Rows.Count, 1).End(xlUp).row
-    qLastRow = qSht.Cells(Rows.Count,1).End(xlUp).row + 1
+    qLastRow = qSht.Cells(Rows.Count, 1).End(xlUp).row + 1
     'get the value
     refID = logSht.Cells(lastRow, 1).Value
     'increment the value and row, and place the value
@@ -174,5 +169,4 @@ On Error Resume Next
         .Cells(qLastRow, 10).Value = notes
     End With
     save
-    
 End Sub

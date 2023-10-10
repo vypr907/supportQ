@@ -1,9 +1,8 @@
-Attribute VB_Name = "adminTools"
 'Code for adding/removing users
 
 
 Public Sub addUser()
-    MsgBox "addin' this shit!"
+    MsgBox "addin' this shit!", , "boop"
     Dim nextRow As Integer
     nextRow = lastUserRow
     
@@ -18,7 +17,7 @@ Public Sub addUser()
         mi = .miBx.Value
         last = .lnameBx.Value
         pin = .pinBx.Value
-        init = LEFT(.fnameBx,1)&LEFT(.miBx,1)&LEFT(.lnameBx,1)
+        init = Left(.fnameBx, 1) & Left(.miBx, 1) & Left(.lnameBx, 1)
     End With
 
     With dataSht
@@ -30,18 +29,21 @@ Public Sub addUser()
     End With
 End Sub
 
+Public Function pinGen()
+    pinGen = Int(2 + Rnd * (9999 - 1111 + 1))
+End Function
+
 Public Function removeUser(row As Integer)
     MsgBox "BEGONE!"
     With dataSht
+        .Cells(row, 5).Value = ""
+        .Cells(row, 6).Value = ""
         .Cells(row, 7).Value = ""
         .Cells(row, 8).Value = ""
         .Cells(row, 9).Value = ""
-        .Cells(row, 10).Value = ""
-        .Cells(row, 11).Value = ""
     End With
 End Function
 
 Sub setUsersRange()
-    'Set usersRng = dataSht.Range("G2:J" & lastUserRow)
-    Set usersRng = dataSht.Cells("G2",lastUserRow)
+    Set usersRng = dataSht.Cells("G2", lastUserRow)
 End Sub
