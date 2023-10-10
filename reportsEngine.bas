@@ -1,3 +1,4 @@
+Attribute VB_Name = "reportsEngine"
 'a function that takes all the potential search options and loads the form accordingly
 
 Public Function logSearch(Optional tech As String, Optional rsn As String, _

@@ -1,3 +1,4 @@
+Attribute VB_Name = "queueActions"
 'For all things pertaining to the operation of a functional queue
 
 'Actual Implementation:

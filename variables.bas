@@ -1,3 +1,4 @@
+Attribute VB_Name = "variables"
 'Just the Global variables
 
 Global wb As Workbook
@@ -34,3 +35,5 @@ Global endDate As String
 'variables for manipulating temp xl instance and wb
 Global temp As Workbook
 Global xlApp As Excel.Application
+
+'TEST

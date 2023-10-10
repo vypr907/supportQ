@@ -1,3 +1,19 @@
+VERSION 5.00
+Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} signInFrm 
+   Caption         =   "Sign In"
+   ClientHeight    =   10770
+   ClientLeft      =   120
+   ClientTop       =   465
+   ClientWidth     =   9225.001
+   OleObjectBlob   =   "signInFrm.frx":0000
+   StartUpPosition =   1  'CenterOwner
+End
+Attribute VB_Name = "signInFrm"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+
 Option Explicit
 
 Private Sub userForm_Initialize()
@@ -45,6 +61,10 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
 End Sub
 
 Private Sub submitBtn_Click()
+    'get position in queue
+    Dim queuePos As Integer
+    queuePos = qSht.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).row
+    
     'test for blank
     With Me
         If .surnameBx = "" Or _
@@ -65,4 +85,3 @@ Private Sub submitBtn_Click()
         queuePos & " in the queue!", "Submission Received", 5
         
 End Sub
-
