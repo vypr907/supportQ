@@ -63,7 +63,7 @@ End Sub
 Private Sub submitBtn_Click()
     'get position in queue
     Dim queuePos As Integer
-    queuePos = qSht.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).row
+    queuePos = qSht.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).row - 1
     
     'test for blank
     With Me
@@ -83,5 +83,7 @@ Private Sub submitBtn_Click()
     surnameBx.SetFocus
     popUp "Thank you! Your Reference number is " & refID & ", and you are position " & _
         queuePos & " in the queue!", "Submission Received", 5
-        
+   'popUpTest "Thank you! Your Reference number is " & refID & ", and you are position " & _
+      queuePos & " in the queue!", "Submission Received", 5
+      
 End Sub

@@ -164,15 +164,39 @@ Public Function ColNumToLetter(ColNumber As Integer)
 End Function
 
 Public Function popUp(msg As String, title As String, time As Integer)
-    InfoBox As Object
+    Dim InfoBox As Object
     Set InfoBox = CreateObject("WScript.Shell")
     'set the message box to close after 10 seconds
     'time = 1
-    Select Case InfoBox.popUp(msg, _
-    time, title, 0)
+    Select Case InfoBox.popUp(msg, time, title, 0)
         Case 1, -1
             Exit Function
     End Select
+End Function
+
+Public Function popUpTest(msg As String, title as String, time As Integer, Optional ByVal buttons As VbMsgBoxStyle = vbOK) As VbMsgBoxResult
+    Dim fso As Object 'FileSystemObject
+    Dim wss As Object 'WshShell
+    Dim TempFile As String
+
+    On Error GoTo ExitPoint
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    Set wss = CreateObject("WScript.Shell")
+
+    With fso
+        TempFile = .BuildPath(.GetSpecialFolder(2).Path, .GetTempName & ".vbs")
+        With .CreateTextFile(TempFile)
+            .WriteLine "Set wss = CreateObject(""WScript.Shell"")" & vbCrLf & _
+            "i = wss.Popup(""" & msg & """," & time & ", """ & title & _
+            """," & buttons & ")" & "" & vbCrLf & "WScript.Quit i"
+            .Close
+        End With
+    End With
+
+    popUpTest = wss.Run(TempFile, 1, True)
+    fso.DeleteFile TempFile, True
+
+    ExitPoint:
 End Function
 
 Public Sub testMsg()
@@ -181,3 +205,4 @@ Public Sub testMsg()
     val = InputBox("Enter some text:", "This is a title")
     popUp (val)
 End Sub
+
